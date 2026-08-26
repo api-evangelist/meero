@@ -1,0 +1,45 @@
+generated: '2026-08-25'
+method: probed
+source: https://www.carcutter.com/.well-known/oauth-authorization-server
+docs: https://www.carcutter.com/.well-known/oauth-protected-resource
+summary: 'The Car-Cutter REST API declares no oauth2 security scheme — it is HTTP bearer only, with
+  no scope surface. The one OAuth 2.0 authorization server CarCutter operates belongs to its remote
+  MCP endpoint, and it advertises exactly one scope.'
+authorization_servers:
+- issuer: https://www.carcutter.com
+  authorization_endpoint: https://www.carcutter.com/oauth/authorize
+  token_endpoint: https://www.carcutter.com/oauth/token
+  revocation_endpoint: https://www.carcutter.com/oauth/revoke
+  grant_types_supported: [authorization_code, refresh_token]
+  response_types_supported: [code]
+  code_challenge_methods_supported: [S256]
+  token_endpoint_auth_methods_supported: [none]
+  client_id_metadata_document_supported: true
+  protects: https://www.carcutter.com/wp-json/mcp/mcp-oauth-server
+- issuer: https://auth.eu.car-cutter.com/
+  kind: openid-connect
+  provider: Auth0
+  authorization_endpoint: https://auth.eu.car-cutter.com/authorize
+  token_endpoint: https://auth.eu.car-cutter.com/oauth/token
+  device_authorization_endpoint: https://auth.eu.car-cutter.com/oauth/device/code
+  userinfo_endpoint: https://auth.eu.car-cutter.com/userinfo
+  jwks_uri: https://auth.eu.car-cutter.com/.well-known/jwks.json
+  registration_endpoint: https://auth.eu.car-cutter.com/oidc/register
+  revocation_endpoint: https://auth.eu.car-cutter.com/oauth/revoke
+  code_challenge_methods_supported: [S256, plain]
+  protects: 'CarCutter Hub (hub.car-cutter.com) and the gated audience https://api2.car-cutter.com'
+  discovered_via: 'The Hub login redirect chain: https://hub.car-cutter.com/ -> /auth/login/ -> auth.eu.car-cutter.com/login?...&audience=https%3A%2F%2Fapi2.car-cutter.com'
+  scopes_note: 'scopes_supported is the stock Auth0 OIDC claim set (openid, profile, offline_access,
+    name, given_name, family_name, nickname, email, email_verified, picture, created_at, identities,
+    phone, address). These are identity claims, not CarCutter API permissions — no product-scoped
+    values are published. The login request itself asks for only "openid offline_access".'
+scopes:
+- name: mcp
+  description: 'Access to the CarCutter MCP server resource. The authorization server publishes no
+    finer-grained scopes and no per-scope descriptions; this is the only value in scopes_supported
+    on both the authorization-server and the protected-resource metadata documents.'
+  source: /.well-known/oauth-authorization-server + /.well-known/oauth-protected-resource
+scope_count: 1
+gaps:
+- No scope decomposition (read vs write, per-tool) is published for the MCP resource.
+- The REST API has no scopes at all; a bearer token is all-or-nothing per account.

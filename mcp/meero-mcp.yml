@@ -1,0 +1,51 @@
+generated: '2026-08-25'
+method: probed
+source: https://www.carcutter.com/.well-known/oauth-protected-resource
+name: CarCutter MCP Server
+provider_note: 'CarCutter is operated by DIFFUSELY Austria GmbH — Diffusely is the December 2024
+  rename of Meero, and the CarCutter API host root still returns "(c) 2026 Meero Austria GmbH".
+  This is the same legal entity, so the server is attributed to this profile.'
+deployment:
+  mode: remote
+  endpoint: https://www.carcutter.com/wp-json/mcp/mcp-oauth-server
+  auth: oauth
+  verified: probed
+discovery:
+  protected_resource_metadata: https://www.carcutter.com/.well-known/oauth-protected-resource
+  authorization_server_metadata: https://www.carcutter.com/.well-known/oauth-authorization-server
+  rfc9728: true
+  rfc8414: true
+probe:
+  method: POST
+  body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  http_status: 401
+  response: '{"code":"mcp_unauthorized","message":"MCP authentication required.","data":{"status":401}}'
+  www_authenticate: 'Bearer realm="https://www.carcutter.com", resource_metadata="https://www.carcutter.com/.well-known/oauth-protected-resource"'
+  checked: '2026-08-25'
+authorization:
+  issuer: https://www.carcutter.com
+  authorization_endpoint: https://www.carcutter.com/oauth/authorize
+  token_endpoint: https://www.carcutter.com/oauth/token
+  revocation_endpoint: https://www.carcutter.com/oauth/revoke
+  grant_types_supported:
+  - authorization_code
+  - refresh_token
+  code_challenge_methods_supported:
+  - S256
+  scopes_supported:
+  - mcp
+  token_endpoint_auth_methods_supported:
+  - none
+  client_id_metadata_document_supported: true
+tools:
+  status: auth-gated
+  count: null
+  note: 'tools/list returns 401 anonymously. The real tool set and per-tool inputSchema require an
+    authenticated OAuth introspection, so no tool list is recorded here rather than guessed. The
+    CarCutter llms.txt does not publish a tool list either.'
+observations:
+- The server is mounted on the CarCutter WordPress marketing site (/wp-json/mcp/...), not on the
+  api.car-cutter.com product API host, so its tools are most likely site/content abilities rather
+  than a wrapper over the Vehicle/Image/Feature REST operations.
+- Authorization is a first-party OAuth server on www.carcutter.com with PKCE S256 and
+  client_id_metadata_document registration; no static client secret is required.

@@ -1,0 +1,74 @@
+generated: '2026-08-25'
+method: derived
+source: openapi/meero-carcutter-openapi.json + live unauthenticated probes of https://api.car-cutter.com on 2026-08-25
+format: custom-json
+rfc9457: false
+envelope:
+  documented:
+    description: 'The spec documents a flat object on every 4xx/5xx: {"code": <int>, "message": <string>}.'
+    example: '{"code": 401, "message": "submitted ''Bearer'' token is unauthorized"}'
+  observed:
+    description: 'A live 400 from the keyless demo endpoint returned the same fields NESTED under
+      an "error" key, which the spec does not document.'
+    example: '{"error":{"code":400,"message":"invalid file"}}'
+    probe: POST https://api.car-cutter.com/vehicle/composition/segment (no auth, no file)
+    http_status: 400
+  drift_note: 'Documented and observed envelopes disagree, and a live 401 on GET /vehicle/status
+    returned an HTML body (Werkzeug/Flask default "401 Unauthorized" page, content-type
+    text/html) rather than the documented JSON UnauthorizedResponse. An agent parsing errors
+    strictly from the contract will fail on both paths.'
+problem_types:
+- name: InputErrorResponse
+  status: 400
+  title: Invalid input
+  fields: [code, message]
+  operations: [syncSubmit, asyncSubmit, asyncStatus, asyncResult, featureSubmit, featuresGet, featureGet, featuresDelete, featureDelete]
+  remediation: Check required multipart fields (image or image_url, cut_type) and query parameters.
+- name: UnauthorizedResponse
+  status: 401
+  title: Unauthorized
+  fields: [code, message]
+  example_message: submitted 'Bearer' token is unauthorized
+  operations: [syncSubmit, asyncSubmit, featureSubmit, featuresGet, featureGet, featuresDelete, featureDelete]
+  remediation: Send a valid HTTP bearer token in the Authorization header.
+- name: CreditsExceededResponse
+  status: 402
+  title: Credits exceeded
+  fields: [code, message]
+  example_message: Credits exceeded. Please contact sales.
+  operations: [syncSubmit, asyncSubmit]
+  remediation: 'Account image-processing credits are exhausted; contact CarCutter sales. This is a
+    commercial quota signal, not a rate limit — no Retry-After is returned.'
+- name: ForbiddenResponse
+  status: 403
+  title: Forbidden
+  fields: [code, message]
+  operations: [syncSubmit]
+- name: ImageNotFoundResponse
+  status: 404
+  title: Image not found
+  fields: [code, message]
+  example_message: no such image
+  operations: [asyncResult]
+- name: ImageExpiredResponse
+  status: 410
+  title: Image expired
+  fields: [code, message]
+  example_message: file does not exist anymore.
+  operations: [asyncResult]
+  remediation: 'Processed results are retained for a limited period and then removed; re-submit the
+    source image. The spec does not state the retention window.'
+- name: FeatureDetectionTooManyVehiclesResponse
+  status: 413
+  title: Too many vehicles in one feature submission
+  fields: [code, message]
+  operations: [featureSubmit]
+- name: InternalServerErrorResponse
+  status: 500
+  title: Internal server error
+  fields: [code, message]
+  operations: [syncSubmit, asyncSubmit, featureSubmit, featuresGet, featureGet, featuresDelete, featureDelete]
+gaps:
+- No 429 / rate-limit response is documented on any operation.
+- No machine-readable error code vocabulary beyond the HTTP status is published; `message` is free text.
+- No RFC 9457 application/problem+json media type is used.

@@ -1,0 +1,85 @@
+generated: '2026-08-25'
+method: derived
+source: openapi/meero-carcutter-openapi.json + /.well-known/oauth-* on www.carcutter.com + live probes 2026-08-25
+standards:
+- id: openapi-3.1
+  conforms: partial
+  evidence: 'openapi/meero-carcutter-openapi.json declares "openapi": "3.1.0" and parses, but keeps
+    14 of its 15 schemas in a top-level Swagger 2.0 `definitions` block referenced as
+    #/definitions/..., and carries Swagger 2.0 `consumes`/`produces` keys on operations. Standard
+    OpenAPI 3.1 tooling will not resolve those $refs.'
+- id: oauth2
+  conforms: true
+  evidence: 'https://www.carcutter.com/.well-known/oauth-authorization-server — authorization_code
+    + refresh_token grants, response_type code, PKCE S256. Scope: mcp. Applies to the MCP server
+    only; the REST API uses a static bearer token with no OAuth flow.'
+- id: rfc8414
+  name: OAuth 2.0 Authorization Server Metadata
+  conforms: true
+  evidence: https://www.carcutter.com/.well-known/oauth-authorization-server returned 200 with a valid metadata document.
+- id: rfc9728
+  name: OAuth 2.0 Protected Resource Metadata
+  conforms: true
+  evidence: 'https://www.carcutter.com/.well-known/oauth-protected-resource returned 200 naming the
+    MCP resource and its authorization server; the 401 from the MCP endpoint carried a matching
+    WWW-Authenticate resource_metadata parameter.'
+- id: rfc7636
+  name: PKCE
+  conforms: true
+  evidence: code_challenge_methods_supported = ["S256"] in the authorization server metadata.
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  evidence: 'A JSON-RPC MCP endpoint is served at https://www.carcutter.com/wp-json/mcp/mcp-oauth-server
+    and answers tools/list with a spec-shaped 401 mcp_unauthorized plus RFC 9728 discovery. Tool
+    conformance beyond transport could not be checked because the schema is auth-gated.'
+- id: oidc
+  conforms: true
+  evidence: 'https://auth.eu.car-cutter.com/.well-known/openid-configuration returned 200 with a
+    valid OIDC discovery document (Auth0-backed) for CarCutter Hub — issuer, authorize, token,
+    userinfo, jwks_uri, device_authorization_endpoint, dynamic registration, PKCE S256. It governs
+    the Hub console and the gated api2.car-cutter.com audience, NOT the public
+    api.car-cutter.com REST API, which is bearer-token only. /.well-known/openid-configuration on
+    www.carcutter.com returns the WordPress HTML shell and is a miss.'
+- id: rfc9457
+  name: Problem Details for HTTP APIs
+  conforms: false
+  evidence: 'Errors use a bespoke {code, message} object (nested under "error" in observed
+    responses); no application/problem+json media type appears in the contract.'
+- id: rfc9116
+  name: security.txt
+  conforms: false
+  evidence: /.well-known/security.txt returned 404 on www.carcutter.com, api.car-cutter.com and hub.car-cutter.com.
+- id: pagination
+  conforms: false
+  evidence: No limit/offset/cursor parameter on POST /vehicle/list or GET /vehicle/shotlist.
+- id: idempotency
+  conforms: partial
+  evidence: 'No Idempotency-Key header anywhere. POST /vehicle/submission is an upsert on the
+    caller-supplied vehicle_id ("If a vehicle with that id already exists, it is updated"); the
+    three billable write paths have no retry protection. See conventions/meero-conventions.yml.'
+- id: rfc8594
+  name: Sunset / Deprecation headers
+  conforms: false
+  evidence: No Sunset or Deprecation header observed; no deprecation policy published.
+- id: json-api
+  conforms: false
+  evidence: Responses are bespoke JSON objects, not JSON:API documents.
+- id: iso8601
+  conforms: false
+  evidence: 'Vehicle.app_status_updated is documented with the example "2024/03/01, 09:59:55" — a
+    slash-and-comma format, not ISO 8601.'
+domain_standards:
+  checked: true
+  found: none
+  note: 'The automotive-imagery / vehicle-merchandising market has no machine-readable interchange
+    standard that this contract declares. The contract touches automotive identifiers only through
+    a free-text vehicle_id whose documentation says "Use the VIN if possible" — ISO 3779 VIN is a
+    numbering scheme, not an API standard, and the contract neither validates nor declares it.
+    No OpenRTB, OData, SCIM, ActivityPub, HL7, X12 or comparable signature is present. Recorded as
+    an honest absence; nothing is invented to fill the slot.'
+compliance_programs:
+  published: false
+  note: 'No trust center, SOC 2 / ISO 27001 certification page or compliance program was found on
+    carcutter.com or car-cutter.com (probe-security-programs.py returned vdp=none trust=none).
+    Consequently no `Compliance` or `TrustCenter` pointer is emitted.'

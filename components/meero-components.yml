@@ -1,0 +1,48 @@
+generated: '2026-08-25'
+method: searched
+source: https://carcutter.github.io/cars-webplayer-js/ + https://github.com/carcutter/cars-webplayer-js + registry.npmjs.org
+summary: 'CarCutter ships one embeddable client-side component family — the CarCutter WebPlayer —
+  which renders exterior 360 spins, interior panoramas, images, videos and feature hotspots inside
+  a dealer or marketplace vehicle detail page. It is a framework-agnostic custom element with
+  first-party wrappers for React, Next, Vue and vanilla JS/TS, published under Apache-2.0.'
+families:
+- name: CarCutter WebPlayer
+  documentation: https://carcutter.github.io/cars-webplayer-js/
+  repository: https://github.com/carcutter/cars-webplayer-js
+  demo: https://cdn.car-cutter.com/libs/web-player/v3/demos/next-gen-360/index.html
+  license: Apache-2.0
+  version: 3.2.14
+  released: '2026-06-29'
+  delivery:
+  - kind: npm
+    packages:
+    - '@car-cutter/wc-webplayer'
+    - '@car-cutter/react-webplayer'
+    - '@car-cutter/next-webplayer'
+    - '@car-cutter/vue-webplayer'
+    - '@car-cutter/vanilla-webplayer'
+  - kind: cdn
+    base: https://cdn.car-cutter.com/libs/web-player/v3/
+    pinned: false
+  capabilities:
+  - Exterior 360 spins (Next Gen 360)
+  - Interior panoramas
+  - Vehicle images and videos
+  - Feature and damage hotspot overlays
+  - Theming
+  - Analytics hooks
+  - Performance controls
+  note: 'Capability list is taken from CarCutter''s own llms.txt description of the WebPlayer
+    documentation; individual attribute/prop names were not enumerated here because the docs site
+    renders client-side.'
+hosted_surfaces:
+- name: CarCutter Hub
+  url: https://hub.car-cutter.com/
+  kind: hosted dashboard
+  auth: login required (307 to /auth/login/)
+  note: Central workspace for original and enhanced media, processing status, VIN and location filters, users, roles and permissions.
+- name: CarCutter demo Web UI
+  url: https://demo.car-cutter.com/
+  kind: hosted playground
+  auth: none observed
+  note: Public image-cutting demo; see sandbox/meero-sandbox.yml.

@@ -1,0 +1,109 @@
+generated: '2026-08-25'
+method: derived
+source: openapi/meero-carcutter-openapi.json + https://cloud.car-cutter.com/doc/api.html + live probes of https://api.car-cutter.com on 2026-08-25
+api: Car-Cutter API
+base_url: https://api.car-cutter.com
+authentication:
+  style: http-bearer
+  header: 'Authorization: Bearer <token>'
+  scheme_name: api_key
+  applied: globally (root-level security)
+  exception: 'POST /vehicle/composition/segment is a keyless public demo path documented in
+    github.com/carcutter/carcutter-api-samples; it accepted an unauthenticated request on
+    2026-08-25 (400 "invalid file" rather than 401).'
+  see: authentication/meero-authentication.yml
+media_types:
+  requests: multipart/form-data (all POST operations)
+  responses: [application/json, image/jpeg, 'plain/text (base64 image string)']
+  note: 'The synchronous composition response is declared as media type "plain/text", which is not
+    a valid IANA media type (the correct token is text/plain). A strict client content-negotiating
+    on the contract will not match the response.'
+idempotency:
+  header: null
+  mechanism: client-supplied-natural-key-upsert
+  detail: 'There is no Idempotency-Key header and no idempotency documentation. POST
+    /vehicle/submission is nonetheless an upsert keyed on the caller-supplied vehicle_id — the
+    contract states "If a vehicle with that id already exists, it is updated and its status is set
+    to new" — so a retried vehicle write does not create a duplicate. Image submissions
+    (asyncSubmit, syncSubmit) have NO such key: a retried image POST is billed and processed again.'
+  safe_to_retry:
+  - POST /vehicle/submission (upsert on vehicle_id)
+  unsafe_to_retry:
+  - POST /vehicle/composition/single-segment (syncSubmit) — re-processes and re-charges credits
+  - POST /vehicle/image/submission (asyncSubmit) — re-processes and re-charges credits
+  - POST /vehicle/feature/submission (featureSubmit)
+  pointer_note: 'No `Idempotency` pointer is emitted in apis.yml. An upsert on one of four write
+    operations is not an API-wide idempotency mechanism, and claiming one would credit CarCutter
+    with a guarantee it does not make.'
+pagination:
+  supported: false
+  detail: 'POST /vehicle/list and GET /vehicle/shotlist return collections with no limit, offset,
+    cursor or page parameter and no envelope metadata. Collection size is unbounded in the contract.'
+filtering:
+  detail: Query-parameter filtering is per-operation only (vehicle_id, image identifiers); no generic filter syntax.
+expansion:
+  supported: false
+metadata:
+  field: custom_reference
+  detail: Vehicle records carry a single free-text custom_reference field for caller-side correlation; there is no key/value metadata map.
+request_tracing:
+  request_id_header: null
+  observed_headers: 'Responses carry only nginx/CloudFront infrastructure headers (x-amz-cf-id, via, x-cache). No application request id is returned.'
+versioning:
+  see: lifecycle/meero-lifecycle.yml
+  in_url: false
+error_envelope:
+  see: errors/meero-problem-types.yml
+  documented: '{"code": <int>, "message": <string>}'
+  observed: '{"error": {"code": <int>, "message": <string>}}'
+  rfc9457: false
+rate_limit_signaling:
+  see: rate-limits/meero-rate-limits.yml
+  headers_observed: none
+  exhaustion_status: '402 Credits exceeded (commercial credit quota, not a rate limit); no 429 is documented'
+async_pattern:
+  style: submit-then-poll
+  submit: POST /vehicle/image/submission (asyncSubmit)
+  poll: GET /vehicle/image/status (asyncStatus)
+  fetch: GET /vehicle/image/result (asyncResult)
+  terminal_states: [final, error, expired]
+  phases: [unknown, downloading, analyzing, cutting, qa-ing, retouching, ready]
+  callbacks: 'None. No webhook, callback URL or event stream is offered — polling is the only completion signal.'
+  forward_compatibility: 'The contract explicitly warns that more status, phase and quality enum values may be added; clients must tolerate unknown values.'
+dry_run_mode:
+  supported: false
+  detail: 'No dry-run/preview flag exists. The closest surface is the keyless demo path
+    (/vehicle/composition/segment) plus cut_type "none", which returns an empty JSON body rather
+    than a rendered image — usable for shape rehearsal but not documented as a dry run.'
+reversibility:
+  grade: absent
+  write_surface: true
+  detail: 'The API has four write operations and no documented reversal operation, no undo, and no
+    stated window for any of them. An agent cannot learn from the contract whether an action it is
+    about to take can be taken back.'
+  operations:
+  - operation: POST /vehicle/submission
+    consequence: Creates or overwrites a vehicle record and resets its status to "new".
+    reversal: none documented
+    window: null
+  - operation: DELETE /vehicle/delete
+    consequence: Marks a vehicle deleted (the contract states vehicle status can be new, active or deleted).
+    reversal: none documented
+    window: null
+    note: 'Because the record persists in a "deleted" state and /vehicle/submission upserts on
+      vehicle_id, re-submitting the same id would plausibly restore it — but the docs do not say
+      so, so this is recorded as an inference and NOT as a documented reversal.'
+  - operation: DELETE /vehicle/feature/delete
+    consequence: Removes one feature (hotspot) annotation from a vehicle.
+    reversal: 'Re-create via POST /vehicle/feature/submission (featureSubmit) — a re-create, not a documented undo; prior annotation content is not recoverable from the API.'
+    window: null
+  - operation: DELETE /vehicle/features/delete
+    consequence: Removes ALL feature annotations for a vehicle in one call.
+    reversal: 'Re-create via featureSubmit only; no bulk restore. This is the highest-consequence unguarded call in the contract — it takes a single vehicle_id and has no confirmation parameter.'
+    window: null
+  - operation: POST /vehicle/image/submission
+    consequence: Enqueues billable image processing (402 Credits exceeded when the account balance is out).
+    reversal: 'none — no cancel operation exists for a queued or in-flight execution.'
+    window: null
+  expiry_not_reversal: 'GET /vehicle/image/result returns 410 "file does not exist anymore." after a
+    result expires. That is a retention limit, not a reversal, and the window is not published.'

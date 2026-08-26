@@ -1,0 +1,94 @@
+generated: '2026-08-25'
+method: searched
+source: registry.npmjs.org + data.jsdelivr.com + https://github.com/carcutter/cars-webplayer-js
+summary: 'CarCutter (Meero/Diffusely) publishes one first-party package family: the CarCutter
+  WebPlayer, a framework-agnostic web component for embedding vehicle 360 spins and media, shipped
+  as five npm packages plus a CDN build. There is NO first-party client library for the
+  api.car-cutter.com REST API in any registry — the only REST integration asset is a curl-based
+  code-samples repository. Registries searched with no first-party result: PyPI, Maven Central,
+  NuGet, pkg.go.dev, RubyGems, Packagist, crates.io.'
+packages:
+- name: '@car-cutter/wc-webplayer'
+  registry: npm
+  url: https://www.npmjs.com/package/@car-cutter/wc-webplayer
+  official: true
+  version: 3.2.14
+  published: '2026-06-29'
+  language: TypeScript
+  license: Apache-2.0
+  repository: https://github.com/carcutter/cars-webplayer-js
+  description: Use CarCutter WebPlayer as a WebComponent
+  kind: ui-component
+  wraps_rest_api: false
+- name: '@car-cutter/react-webplayer'
+  registry: npm
+  url: https://www.npmjs.com/package/@car-cutter/react-webplayer
+  official: true
+  version: 3.2.14
+  published: '2026-06-29'
+  language: TypeScript
+  license: Apache-2.0
+  repository: https://github.com/carcutter/cars-webplayer-js
+  description: Use CarCutter WebPlayer in your React app
+  kind: ui-component
+  wraps_rest_api: false
+- name: '@car-cutter/next-webplayer'
+  registry: npm
+  url: https://www.npmjs.com/package/@car-cutter/next-webplayer
+  official: true
+  version: 3.2.14
+  published: '2026-06-29'
+  language: TypeScript
+  license: Apache-2.0
+  repository: https://github.com/carcutter/cars-webplayer-js
+  description: Use CarCutter WebPlayer in your Next app
+  kind: ui-component
+  wraps_rest_api: false
+- name: '@car-cutter/vue-webplayer'
+  registry: npm
+  url: https://www.npmjs.com/package/@car-cutter/vue-webplayer
+  official: true
+  version: 3.2.14
+  published: '2026-06-29'
+  language: TypeScript
+  license: Apache-2.0
+  repository: https://github.com/carcutter/cars-webplayer-js
+  description: Use CarCutter WebPlayer in your Vue app
+  kind: ui-component
+  wraps_rest_api: false
+- name: '@car-cutter/vanilla-webplayer'
+  registry: npm
+  url: https://www.npmjs.com/package/@car-cutter/vanilla-webplayer
+  official: true
+  version: 3.2.14
+  published: '2026-06-29'
+  language: TypeScript
+  license: Apache-2.0
+  repository: https://github.com/carcutter/cars-webplayer-js
+  description: Use CarCutter WebPlayer with Vanilla JS/TS
+  kind: ui-component
+  wraps_rest_api: false
+- name: CarCutter WebPlayer CDN build
+  registry: cdn
+  url: https://cdn.car-cutter.com/libs/web-player/v3/
+  official: true
+  version: null
+  published: null
+  note: 'The CDN distribution is pinned only to the MAJOR line (/v3/), not to a full version — the
+    demo at cdn.car-cutter.com/libs/web-player/v3/demos/next-gen-360/index.html loads from that
+    floating path. A consumer cannot tell from the URL which build they are getting; there is no
+    CDN metadata endpoint for this host. The npm line was at 3.2.14 on 2026-06-29.'
+  kind: ui-component
+non_registry_assets:
+- name: carcutter-api-samples
+  url: https://github.com/carcutter/carcutter-api-samples
+  official: true
+  version: null
+  published: '2022-04-28'
+  note: 'curl code samples for the keyless public demo API. Last pushed 2022-04-28 and it still
+    documents POST /vehicle/composition/segment, while the current published contract exposes
+    /vehicle/composition/single-segment — the sample path is four years stale relative to the spec
+    (both were live on 2026-08-25). No registry package, so version is null.'
+gaps:
+- No first-party SDK exists for the Car-Cutter REST API in any language, so no `SDKs` pointer is emitted.
+- The WebPlayer packages are embeddable UI components, catalogued in components/meero-components.yml.

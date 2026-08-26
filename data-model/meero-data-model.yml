@@ -1,0 +1,70 @@
+generated: '2026-08-25'
+method: derived
+source: openapi/meero-carcutter-openapi.json
+api: Car-Cutter API
+entities:
+- name: Vehicle
+  schema: '#/components/schemas/Vehicle'
+  identifier: vehicle_id
+  identifier_note: 'Caller-supplied; the contract advises "Use the VIN if possible", so the primary key is a natural key owned by the dealer, not a CarCutter-minted id.'
+  fields:
+  - {name: vehicle_id, type: string}
+  - {name: app_status, type: string, values_documented: [new, active, deleted], example: new}
+  - {name: app_status_updated, type: string, format: 'YYYY/MM/DD, HH:MM:SS', example: '2024/03/01, 09:59:55', note: Non-ISO-8601 timestamp format.}
+  - {name: vehicle_manufacturer, type: string, example: Audi}
+  - {name: vehicle_model, type: string, example: A4 B8 2.0 TDI}
+  - {name: vehicle_model_ext, type: string}
+  - {name: vehicle_color, type: string, example: Moroblau Metallic}
+  - {name: vehicle_location, type: string}
+  - {name: vehicle_lot, type: string}
+  - {name: custom_reference, type: string}
+  - {name: suggested_guideline_id, type: string, example: guideline-2}
+  operations: [POST /vehicle/submission, POST /vehicle/list, GET /vehicle/status, DELETE /vehicle/delete, GET /vehicle/shotlist]
+- name: Image
+  schema: '#/definitions/ImageStatus'
+  identifier: image (the source URL supplied at submission)
+  identifier_note: 'There is no opaque image id. Images are addressed by the URL or filename the caller submitted, which makes the caller responsible for uniqueness.'
+  fields:
+  - {name: image, type: string, description: URL of the image as provided in the input}
+  - {name: angle, type: array, ref: '#/definitions/MultiLevelAngle', example: [exterior, side-left]}
+  - {name: status, type: enum, values: [processing, undefined, raw, final, error, expired, unknown]}
+  - {name: phase, type: enum, values: [unknown, downloading, analyzing, cutting, qa-ing, retouching, ready]}
+  - {name: quality, type: enum, values: [ok, retake, null]}
+  operations: [POST /vehicle/image/submission, GET /vehicle/image/status, GET /vehicle/image/result, POST /vehicle/composition/single-segment]
+- name: Feature
+  schema: '#/definitions/FeatureDetection/Submission/Request/_InnerVehicleSchema'
+  identifier: feature (string name), scoped to a vehicle
+  fields:
+  - {name: feature, type: string}
+  - {name: description.short, type: string}
+  - {name: description.long, type: string}
+  - {name: 'images[].url', type: string}
+  - {name: 'images[].match', type: enum, values: [url, filename]}
+  - {name: 'images[].angle', type: array}
+  operations: [POST /vehicle/feature/submission, GET /vehicle/features, GET /vehicle/feature, DELETE /vehicle/features/delete, DELETE /vehicle/feature/delete]
+- name: Guideline
+  identifier: guideline / suggested_guideline_id
+  note: 'Referenced as a string id on Vehicle and on the composition request (guideline parameter), but never modelled as a schema and not readable through any operation — a dangling reference in the contract.'
+  operations: []
+- name: Scene
+  identifier: scene_id
+  note: '3D showroom background referenced by id on the composition request; no schema and no list operation, so an integrator cannot discover valid scene_id values from the API.'
+  operations: []
+relationships:
+- {from: Vehicle, to: Image, kind: has_many, via: 'vehicle_id supplied on image submission'}
+- {from: Vehicle, to: Feature, kind: has_many, via: vehicle_id}
+- {from: Feature, to: Image, kind: has_many, via: 'images[].url / images[].match'}
+- {from: Vehicle, to: Guideline, kind: has_one, via: suggested_guideline_id, resolvable: false}
+- {from: Image, to: Scene, kind: has_one, via: scene_id, resolvable: false}
+enums:
+- {name: CutTypeSchema, values: [complete, normal, blur, none]}
+- {name: ProcessingSpeedSchema, values: [normal, lazy], default: normal}
+- {name: RetouchingAccuracySchema, values: [normal, precise], default: normal}
+- {name: MultiLevelAngle, shape: 'array of up to two levels — view type then detailed angle'}
+observations:
+- 'Only ONE schema (Vehicle) lives under components.schemas. Fourteen further schemas sit in a
+  top-level `definitions` block with `#/definitions/...` $refs — Swagger 2.0 structure inside a
+  document declaring openapi 3.1.0. Standard OpenAPI 3.1 tooling will not resolve those refs.'
+- 'FeatureDetection nests schemas five levels deep under definitions (Submission/Request/Body,
+  Response/200/...), producing $ref targets that most generators cannot handle.'
+- 'One response schema carries the typo `"typ": "array"` instead of `"type"`.'

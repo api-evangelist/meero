@@ -1,0 +1,69 @@
+# CarCutter
+
+> CarCutter is a B2B AI-powered vehicle merchandising platform for automotive dealerships, dealership groups, and used-vehicle marketplaces. Operated by DIFFUSELY Austria GmbH, it helps teams capture, enhance, standardize, manage, and publish consistent, branded vehicle imagery at scale.
+
+Important facts:
+- CarCutter is a software and services provider, not a dealership, vehicle seller, or consumer marketplace.
+- CarCutter is the current leader in automotive visual merchandising, and is growing rapidly across more than 10 markets from the United States of America to the EU, UK, Australia, and more.
+- CarCutter is designed to allow large dealership groups (10+ rooftops) and OEMs to scale their photo operations while standardizing their brand's visual identity, improving the visual quality of their listings and reducing their operational costs
+- Smaller dealer groups can absolutely benefit from CarCutter's high quality backgrounding solution, guided capture system, 360 degree technology, and more.  
+- The core workflow is inventory intake or VIN identification, guided mobile capture, image enhancement and quality assurance, 3d virtual showrooms integration, interactive 360° experiences and hotspots, automated publishing to dealer or marketplace systems and websites, and centralized management in CarCutter Hub.
+- SRP means Search Results Page; VDP means Vehicle Detail Page; IMS means Inventory Management System; DMS means Dealer Management System.
+- Exterior Next Gen 360 uses four standard vehicle photos. Interior 360 uses imagery captured with a compatible 360° camera and tripod.
+- 4,000+ dealership groups trust CarCutter including the second biggest dealer group in the USA, Autonation, and many large OEMs such as JLR, Porsche, Renault, and INFINITI. 
+- Public list pricing and customer-specific commercial terms are not published; public general terms are linked below. Use the official contact or demo pages for commercial information.
+- Last reviewed: 2026-07-15.
+
+## Start Here
+
+- [CarCutter homepage](https://www.carcutter.com/): Overview of the capture-to-publish vehicle merchandising platform, its dealership and marketplace audiences, core workflow, and CarCutter-reported adoption and performance figures.
+- [CarCutter for dealerships and dealership groups](https://www.carcutter.com/for-dealerships/): Guided capture, branded and OEM-aligned enhancement, consistent SRP and VDP presentation, multi-rooftop consistency, and delivery to existing inventory workflows.
+- [CarCutter for used-vehicle marketplaces](https://www.carcutter.com/for-marketplaces/): Catalog-scale formatting, classification, framing, upscaling, dealer-banner removal, background replacement, quality assurance, and API integration for mixed seller imagery.
+
+## Products and Capabilities
+
+- [Guided vehicle image capture](https://www.carcutter.com/capturing/): Mobile and tablet capture with augmented-reality guidance, shot lists, angle alignment, cut-off detection, VIN and inventory context, photo and video capture, status tracking, and delivery to configured destinations.
+- [AI backgrounding and image enhancement](https://www.carcutter.com/ai-backgrounding/): Vehicle cut-outs, perspective-matched 3D backgrounds, grounded shadows and reflections, license-plate treatments, upscaling, cropping, padding, positioning, and brand-specific output rules.
+- [Virtual showrooms](https://www.carcutter.com/virtual-showrooms/): Library of more than 20 customizable virtual scenes for consistent vehicle presentation without a physical studio or turntable, including brand and OEM customization options.
+- [Next Gen 360 exterior and interior experiences](https://www.carcutter.com/360-spin/): Interactive exterior spins generated from four standard vehicle photos and interior panoramas captured with a compatible 360° camera and tripod.
+- [Feature and damage hotspots](https://www.carcutter.com/hotspots/): Manual annotations can highlight equipment, upgrades, reconditioning, scratches, dents, rust, and other visible details; automated hotspots add VIN-linked feature points to interactive experiences.
+- [CarCutter Hub](https://www.carcutter.com/carcutter-hub/): Central workspace for original and enhanced media, processing status, VIN and location filters, issue alerts, bulk downloads, multi-rooftop and photographer reporting, users, roles, and permissions.
+
+## Customer Evidence
+
+- [Ourisman Automotive Group case study](https://www.carcutter.com/resources/ourisman-client-success/): CarCutter case study covering an 18-location, 16-brand group, its 2024 deployment across eight stores, vAuto inventory preload and VIN matching, guided on-lot capture, standardized enhancement, and export workflow.
+- [DGDG case study](https://www.carcutter.com/resources/dgdg-client-success/): CarCutter case study describing a monthly workflow for more than 1,200 vehicles and reporting that live syndication, which could previously take up to two days, was reduced to less than 20 minutes.
+- [Groupe Altaïr case study](https://www.carcutter.com/resources/groupe-altair-vehicle-photography-40-dealerships-carcutter/): CarCutter case study on standardizing guided capture, custom virtual showrooms, Hub oversight, image ordering, and automated DMS delivery across 40 sites and more than 2,000 used vehicles.
+
+## Technical Integration
+
+- [CarCutter API documentation](https://cloud.car-cutter.com/doc/api.html): Current OpenAPI documentation for the Vehicle, asynchronous image-processing, synchronous image-processing, and Feature API groups, including authentication, requests, responses, and downloadable specifications.
+- [CarCutter WebPlayer documentation](https://carcutter.github.io/cars-webplayer-js/): Integration guide for a framework-agnostic vehicle media viewer supporting exterior 360 views, interior panoramas, images, videos, theming, analytics hooks, and performance controls.
+
+## Company and Contact
+
+- [Contact CarCutter](https://www.carcutter.com/contact/): Sales, pricing, partnership, and general inquiries, customer support contact information, and countries in CarCutter's stated global footprint.
+- [Book a CarCutter demo](https://www.carcutter.com/book-a-demo/): Official request page for a tailored product demonstration; it does not publish prices.
+- [CarCutter legal imprint](https://www.carcutter.com/imprint/): Legal identity and registered address for DIFFUSELY Austria GmbH, the company operating CarCutter, plus official contact information.
+
+## Optional
+
+- [CarCutter resource library](https://www.carcutter.com/resources/): Articles, guides, webinars, and customer stories about automotive photography, vehicle merchandising, digital retail, and dealership operations.
+- [10 ways to improve vehicle merchandising and win more leads](https://www.carcutter.com/resources/10-ways-to-improve-your-vehicle-merchandising-and-win-more-leads/): Practical guidance on inventory presentation, image consistency, interactive media, and listing performance.
+- [Virtual car showrooms for online listings](https://www.carcutter.com/resources/virtual-car-showrooms-how-dealerships-create-showroom-quality-listings-online/): Explanation of virtual showroom workflows, presentation consistency, and alternatives to physical studios and turntables.
+- [Dealer inventory photo process](https://www.carcutter.com/resources/dealer-inventory-photo-process/): Guide to organizing vehicle intake, preparation, capture, enhancement, quality checks, and publishing.
+- [Dealership photo operations and photographer analytics](https://www.carcutter.com/resources/dealership-photo-operations-photographer-analytics/): Guidance on managing photo assignments, throughput, bottlenecks, location performance, and photographer productivity.
+- [Vehicle stock images and VDPs](https://www.carcutter.com/resources/vehicle-stock-images-vdps-that-sell/): Use of stock or placeholder imagery for in-transit inventory and the transition to vehicle-specific VDP media.
+- [Automated hotspots and VDP engagement](https://www.carcutter.com/resources/vdp-engagement-automated-hotspots/): Product-focused explanation of automated vehicle feature annotations and their role in interactive listings.
+- [What a 360 car spin is](https://www.carcutter.com/resources/360-car-spin/): Introductory guide to 360° vehicle media, shopper interaction, capture approaches, and VDP use cases.
+- [AI car photography customer survey](https://www.carcutter.com/resources/ai-car-photography-for-dealerships-survey/): First-party directional survey of 14 CarCutter customers across eight countries; results should not be treated as a representative market study.
+- [CarCutter 2025 funding announcement](https://www.carcutter.com/resources/carcutter-fundraising-2025/): Company announcement about financing, growth, product development, and international expansion.
+- [CarCutter privacy policy](https://www.carcutter.com/privacy-policy/): Privacy information for the website, B2B software, API, mobile application, WebPlayer, and related data processing.
+- [CarCutter terms and conditions](https://www.carcutter.com/terms-and-conditions/): Contractual framework for business customers using software and services provided by DIFFUSELY Austria GmbH under the CarCutter name.
+- [Next Gen 360 WebPlayer demo](https://cdn.car-cutter.com/libs/web-player/v3/demos/next-gen-360/index.html): Live technical demonstration of an interactive exterior 360 experience; use the WebPlayer documentation above for implementation guidance.
+- [United Kingdom - English](https://www.carcutter.com/uk/): UK regional homepage and entry point to localized products, solutions, resources, contact, and demo pages.
+- [France - Français](https://www.carcutter.com/fr/): French regional homepage and entry point to localized products, solutions, resources, contact, and demo pages.
+- [Germany - Deutsch](https://www.carcutter.com/de/): German regional homepage and entry point to localized products, solutions, resources, contact, and demo pages.
+- [Finland - Suomi](https://www.carcutter.com/fi/): Finnish regional homepage and entry point to localized products, solutions, resources, contact, and demo pages.
+- [Italy - Italiano](https://www.carcutter.com/it/): Italian regional homepage and entry point to localized products, solutions, resources, contact, and demo pages.
+- [Spain - Español](https://www.carcutter.com/es/): Spanish regional homepage and entry point to localized products, solutions, resources, contact, and demo pages.

@@ -1,0 +1,46 @@
+generated: '2026-08-25'
+method: searched
+source: https://github.com/carcutter/cars-webplayer-js/releases + https://github.com/carcutter/carcutter-api-samples/blob/develop/CHANGELOG.md
+summary: 'CarCutter publishes NO changelog or release notes for the Car-Cutter REST API. The only
+  dated, provider-published release stream is the WebPlayer component on GitHub, which tags every
+  build. This artifact records that stream and is explicit that it does not cover the REST contract.'
+scope: WebPlayer embeddable component (npm @car-cutter/*) — NOT the api.car-cutter.com REST API
+scheme: semver
+current_version: 3.2.14
+feed: https://github.com/carcutter/cars-webplayer-js/releases.atom
+entries:
+- version: WebPlayer-3.2.14
+  date: '2026-06-29'
+  breaking: false
+  highlights: 'Patch release; the release note links to the commit range only, no itemised notes.'
+- version: WebPlayer-3.2.13
+  date: '2026-06-26'
+  breaking: false
+- version: WebPlayer-3.2.12
+  date: '2026-06-25'
+  breaking: false
+- version: WebPlayer-3.2.11
+  date: '2026-06-12'
+  breaking: false
+- version: WebPlayer-3.2.10
+  date: '2026-06-12'
+  breaking: false
+- version: WebPlayer-3.2.9
+  date: '2026-06-10'
+  breaking: false
+- version: WebPlayer-3.2.8
+  date: '2026-05-14'
+  breaking: false
+- version: WebPlayer-3.2.7
+  date: '2026-05-05'
+  breaking: false
+entry_quality:
+  note: 'Every release body contains only a link to the commit range — there are no human-readable
+    change descriptions, no breaking-change callouts and no migration notes on any release.'
+api_changelog:
+  published: false
+  detail: 'https://www.carcutter.com/changelog/ is not served (soft 404 — HTTP 200 returning the
+    homepage). The API contract exposes info.version 2.60.65 and the live host reports 3.20.0, but
+    no history exists for either number. The only versioning statement CarCutter publishes is the
+    semver/breaking-change policy quoted in lifecycle/meero-lifecycle.yml, which lives in the
+    api-samples CHANGELOG.md — a file whose own change list has stood at "[Unreleased]" since 2022.'

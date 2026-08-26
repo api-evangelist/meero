@@ -1,0 +1,64 @@
+generated: '2026-08-25'
+method: probed
+source: openapi/meero-carcutter-openapi.json + live probes of api.car-cutter.com, hub.car-cutter.com, auth.eu.car-cutter.com and www.carcutter.com on 2026-08-25
+docs: https://cloud.car-cutter.com/doc/api.html
+summary:
+  types:
+  - http
+  - oauth2
+  - openIdConnect
+  note: 'Three distinct authentication surfaces, only one of which is the public product API.'
+schemes:
+- name: api_key
+  type: http
+  scheme: bearer
+  surface: public REST API (https://api.car-cutter.com)
+  applied: root-level security on every operation
+  sources:
+  - openapi/meero-carcutter-openapi.json
+  detail: 'The scheme is named "api_key" but declared as HTTP bearer. Tokens are issued per
+    CarCutter account; there are no scopes, no token endpoint and no documented rotation or
+    expiry policy. The 401 message the contract publishes is "submitted ''Bearer'' token is
+    unauthorized".'
+  observed:
+    request: GET https://api.car-cutter.com/vehicle/status?vehicle_id=test (no Authorization header)
+    http_status: 401
+    body_content_type: text/html
+    note: 'The live 401 body is an HTML "401 Unauthorized" page, not the JSON UnauthorizedResponse
+      the contract documents — a real gap between contract and runtime.'
+- name: none (public demo)
+  type: none
+  surface: POST https://api.car-cutter.com/vehicle/composition/segment
+  detail: 'A keyless demo composition path documented in github.com/carcutter/carcutter-api-samples.
+    Probed unauthenticated on 2026-08-25 and returned 400 "invalid file" rather than 401,
+    confirming it requires no credential. See sandbox/meero-sandbox.yml.'
+- name: carcutter_mcp_oauth
+  type: oauth2
+  surface: https://www.carcutter.com/wp-json/mcp/mcp-oauth-server
+  flows:
+    authorizationCode:
+      authorizationUrl: https://www.carcutter.com/oauth/authorize
+      tokenUrl: https://www.carcutter.com/oauth/token
+      refreshUrl: https://www.carcutter.com/oauth/token
+      scopes:
+        mcp: Access to the CarCutter MCP server resource.
+  pkce: S256
+  client_registration: client_id_metadata_document (no client secret)
+  discovery:
+  - https://www.carcutter.com/.well-known/oauth-authorization-server
+  - https://www.carcutter.com/.well-known/oauth-protected-resource
+  detail: RFC 8414 + RFC 9728 compliant; the MCP 401 returns a WWW-Authenticate header pointing at the protected-resource metadata.
+- name: carcutter_hub_oidc
+  type: openIdConnect
+  openIdConnectUrl: https://auth.eu.car-cutter.com/.well-known/openid-configuration
+  surface: CarCutter Hub (https://hub.car-cutter.com/) and the gated audience https://api2.car-cutter.com
+  provider: Auth0
+  pkce: [S256, plain]
+  scopes_requested_by_hub: [openid, offline_access]
+  detail: 'Discovered from the Hub login redirect. api2.car-cutter.com is an AWS API Gateway that
+    answers every path with 403 {"message":"Missing Authentication Token"} — there is no public
+    contract for it, so it is recorded but not profiled.'
+gaps:
+- No token rotation, expiry or revocation policy is published for the REST bearer token.
+- The REST API has no scopes; a token is all-or-nothing for the account.
+- No mutual TLS, no request signing, no IP allowlisting is documented.

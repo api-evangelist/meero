@@ -64,5 +64,20 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Meero is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/meero_stock/
+Meero is the Paris-founded AI visual-content company that rebranded to **Diffusely** in December 2024 after pivoting away from on-demand photography marketplaces toward vertical AI imaging software. Its surviving operating brand is **CarCutter** (DIFFUSELY Austria GmbH), a B2B vehicle merchandising platform for dealership groups, OEMs and used-vehicle marketplaces.
+
+The public developer surface profiled here belongs to CarCutter:
+
+- **Car-Cutter API** — OpenAPI 3.1, 14 operations, bearer token, `https://api.car-cutter.com` — [docs](https://cloud.car-cutter.com/doc/api.html)
+- **Public keyless demo** — `POST /vehicle/composition/segment` plus a hosted UI at https://demo.car-cutter.com/
+- **Remote MCP server** — `https://www.carcutter.com/wp-json/mcp/mcp-oauth-server` (OAuth-gated, RFC 8414 + RFC 9728 discovery)
+- **CarCutter WebPlayer** — five first-party npm packages (`@car-cutter/*`, Apache-2.0) and a CDN build
+- **Status page** — https://carcutter.statuspage.io/
+- **llms.txt** — https://www.carcutter.com/llms.txt
+
+Ownership evidence: `https://api.car-cutter.com/` returns `{"copyright":"(c) 2026 Meero Austria GmbH","description":"A service by CarCutter"}`, and Diffusely's own domain `diffuse.ly` redirects to `www.carcutter.com`.
+
+Two former Diffusely verticals have left the group and are **not** attributed here: **autoRetouch** merged into Grand Shooting (February 2026) and **ProperShot** joined Nodalview. The legacy `meero.com` domain no longer serves the company — it answers with an Apache2 Ubuntu default page under a certificate for `CN=forlog.fr`, and `api.meero.com` no longer resolves.
+
+- https://www.carcutter.com/
+- https://forgeglobal.com/meero_stock/ (secondary-market listing that seeded this profile)

@@ -1,23 +1,130 @@
 aid: meero
 name: Meero
-description: 'Meero is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Meero is the Paris-founded AI visual-content company that rebranded to Diffusely
+  in December 2024 after pivoting away from on-demand photography marketplaces toward vertical
+  AI imaging software. Its surviving operating brand is CarCutter (DIFFUSELY Austria GmbH, whose
+  API host still returns the copyright line "(c) 2026 Meero Austria GmbH"), a B2B vehicle
+  merchandising platform used by dealership groups, OEMs and used-vehicle marketplaces for guided
+  capture, AI backgrounding, 360 spins, feature hotspots and automated publishing. The public
+  developer surface is the Car-Cutter API (OpenAPI 3.1, bearer token, api.car-cutter.com), a
+  keyless public demo endpoint, an OAuth-gated remote MCP server, a WebPlayer web-component
+  family on npm, and a Statuspage. Two former Diffusely verticals have since left the group:
+  autoRetouch merged into Grand Shooting (February 2026) and ProperShot joined Nodalview, so
+  neither of their APIs is attributed here.'
 url: https://raw.githubusercontent.com/api-evangelist/meero/refs/heads/main/apis.yml
+image: https://www.carcutter.com/wp-content/themes/carcutter/img/car-cutter-logo-25.svg
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-25'
 modified: '2026-08-25'
 tags:
+- Automotive
+- Images
+- Artificial Intelligence
+- Computer Vision
+- Photography
+- Media Processing
+- E-Commerce
+- Vehicle Merchandising
 - Company
-apis: []
+apis:
+- aid: meero:carcutter-api
+  name: Car-Cutter API
+  description: 'The Car-Cutter API is the public REST contract for CarCutter vehicle image
+    processing. It covers vehicle inventory records and shot lists, synchronous single-image
+    composition, asynchronous batch image submission with status polling and result retrieval,
+    and the Feature (hotspot) API for annotating vehicle equipment and damage. Authentication is
+    an HTTP bearer token; the composition endpoint also exposes a keyless public demo mode.'
+  humanURL: https://cloud.car-cutter.com/doc/api.html
+  baseURL: https://api.car-cutter.com
+  tags:
+  - Automotive
+  - Images
+  - Vehicle Merchandising
+  properties:
+  - type: OpenAPI
+    url: openapi/meero-carcutter-openapi.json
+  - type: Documentation
+    url: https://cloud.car-cutter.com/doc/api.html
+  - type: APIReference
+    url: https://cloud.car-cutter.com/doc/api.html
+  - type: Overlay
+    url: overlays/meero-carcutter-overlay.yaml
+  - type: Examples
+    url: https://github.com/carcutter/carcutter-api-samples
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/meero-domain-security.yml
+- type: Authentication
+  url: authentication/meero-authentication.yml
 - type: Website
-  url: https://forgeglobal.com/meero_stock/
+  url: https://www.carcutter.com/
+- type: DeveloperPortal
+  url: https://cloud.car-cutter.com/doc/api.html
+- type: Documentation
+  url: https://cloud.car-cutter.com/doc/api.html
+- type: APIReference
+  url: https://cloud.car-cutter.com/doc/api.html
+- type: GettingStarted
+  url: https://github.com/carcutter/carcutter-api-samples
+- type: Support
+  url: https://www.carcutter.com/contact/
+- type: Blog
+  url: https://www.carcutter.com/resources/
+- type: GitHubOrganization
+  url: https://github.com/carcutter
+- type: SignUp
+  url: https://www.carcutter.com/book-a-demo/
+- type: Login
+  url: https://hub.car-cutter.com/
+- type: TermsOfService
+  url: https://www.carcutter.com/terms-and-conditions/
+- type: PrivacyPolicy
+  url: https://www.carcutter.com/privacy-policy/
+- type: StatusPage
+  url: https://carcutter.statuspage.io/
+- type: LLMsTxt
+  url: llms/meero-llms.txt
+- type: WellKnown
+  url: well-known/meero-well-known.yml
+- type: MCPServer
+  url: mcp/meero-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/meero-tool-crosswalk.yml
+- type: OAuthScopes
+  url: scopes/meero-scopes.yml
+- type: Conformance
+  url: conformance/meero-conformance.yml
+- type: ErrorCatalog
+  url: errors/meero-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/meero-lifecycle.yml
+- type: Conventions
+  url: conventions/meero-conventions.yml
+- type: DataModel
+  url: data-model/meero-data-model.yml
+- type: Packages
+  url: packages/meero-packages.yml
+- type: Components
+  url: components/meero-components.yml
+- type: Sandbox
+  url: sandbox/meero-sandbox.yml
+- type: ChangeLog
+  url: changelog/meero-changelog.yml
+- type: Plans
+  url: plans/meero-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/meero-rate-limits.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-08-25'
+  status: enriched
+  artifacts_added: 27
+  pass: local-v1

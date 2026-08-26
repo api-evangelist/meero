@@ -1,0 +1,68 @@
+generated: '2026-08-25'
+method: searched
+source: https://carcutter.statuspage.io/ + https://github.com/carcutter/carcutter-api-samples/blob/develop/CHANGELOG.md + openapi/meero-carcutter-openapi.json
+versioning:
+  scheme: semver
+  current_contract_version: 2.60.65
+  contract_version_source: info.version in openapi/meero-carcutter-openapi.json
+  runtime_version: 3.20.0
+  runtime_version_source: 'GET https://api.car-cutter.com/ returns {"name":"Vehicle Feature API","version":"3.20.0"} (probed 2026-08-25)'
+  version_in_url: false
+  version_header: null
+  note: 'The published contract version (2.60.65) and the version the live API host reports
+    (3.20.0) are different numbering lines and neither is negotiable by the client — there is no
+    version path segment and no version request header.'
+  policy_statement: 'From the CarCutter API samples CHANGELOG: "This project uses Semantic
+    Versioning. We consider it a breaking change when customer-facing APIs and contracts change in
+    a backwards-incompatible manner, e.g. our HTTP API or our customer data transfer."'
+  policy_source: https://github.com/carcutter/carcutter-api-samples/blob/develop/CHANGELOG.md
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  deprecated_operations: []
+  note: 'No deprecation or sunset policy is published, and no operation in the contract is marked
+    deprecated. RFC 8594 Sunset/Deprecation headers were not observed. Two enum fields carry
+    forward-compatibility warnings instead — ImageStatus.status and ImageStatus.phase both say
+    "More possible status values might be introduced in the future", which asks clients to tolerate
+    unknown values but is not a deprecation policy.'
+status_page:
+  url: https://carcutter.statuspage.io/
+  provider: Atlassian Statuspage
+  http_status: 200
+  history: https://carcutter.statuspage.io/history
+  machine_readable: https://carcutter.statuspage.io/api/v2/summary.json
+  feeds:
+  - https://carcutter.statuspage.io/history.atom
+  - https://carcutter.statuspage.io/history.rss
+  components:
+  - name: API
+    description: Status for the (async) API.
+    uptime_90d: 99.95%
+  - name: App
+    description: Status for the mobile app (iOS and/or Android).
+    uptime_90d: 99.98%
+  - name: Automated Hotspots
+    uptime_90d: 99.98%
+  - name: Cockpit
+    uptime_90d: 99.98%
+  - name: Hub
+    uptime_90d: 99.92%
+  - name: Image Delivery
+    uptime_90d: 99.98%
+  - name: Image Generation
+    uptime_90d: 99.98%
+  - name: NextGen360
+    uptime_90d: 99.92%
+  observed_state: All Systems Operational (2026-08-25)
+sla:
+  published: false
+  note: No public SLA or uptime commitment is published; the Statuspage reports observed 90-day uptime only.
+retention:
+  processed_images: 'Time-limited — GET /vehicle/image/result returns 410 "file does not exist anymore." once a result expires. The window is not stated in the contract or docs.'
+corporate_lifecycle:
+  note: 'Company-level lifecycle events that bear on this API surface: Meero rebranded to Diffusely
+    (December 2024); the legacy meero.com host no longer serves the company (Apache2 Ubuntu default
+    page under a CN=forlog.fr certificate) and api.meero.com no longer resolves; autoRetouch, the
+    former Diffusely fashion vertical, merged into Grand Shooting (February 2026); ProperShot joined
+    Nodalview. CarCutter is the surviving API-bearing brand.'

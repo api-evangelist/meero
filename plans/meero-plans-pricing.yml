@@ -1,0 +1,23 @@
+generated: '2026-08-25'
+method: searched
+source: https://www.carcutter.com/llms.txt + https://www.carcutter.com/ (no pricing page served)
+plan_count: 0
+currency: null
+plans: []
+note: 'CarCutter publishes no plans, tiers or list prices. Its own llms.txt states verbatim:
+  "Public list pricing and customer-specific commercial terms are not published; public general
+  terms are linked below. Use the official contact or demo pages for commercial information."
+  https://www.carcutter.com/pricing/ is not served — it soft-404s by returning HTTP 200 with the
+  homepage. Commercial entry is https://www.carcutter.com/book-a-demo/ (sales gate).'
+evidence:
+- url: https://www.carcutter.com/llms.txt
+  status: 200
+- url: https://www.carcutter.com/pricing/
+  status: 200
+  note: soft 404 — returns the homepage shell, not a pricing page
+- url: https://www.carcutter.com/book-a-demo/
+  status: 200
+billing_signal:
+  note: 'The API exposes a credit balance indirectly: HTTP 402 "Credits exceeded. Please contact
+    sales." on syncSubmit and asyncSubmit. Credit pricing is not published and there is no balance
+    endpoint.'

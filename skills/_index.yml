@@ -1,0 +1,19 @@
+generated: '2026-08-25'
+method: generated
+source: openapi/meero-carcutter-openapi.json + conventions/meero-conventions.yml + errors/meero-problem-types.yml
+api: Car-Cutter API
+note: 'Every operation named in these skills was grepped out of the published contract. The five
+  vehicle operations have no operationId in the contract and are referenced by method and path.'
+skills:
+- name: carcutter-async-image-processing
+  file: meero-async-image-processing.md
+  description: Submit vehicle photos for AI cutting/backgrounding, poll to completion, download results.
+  operations: [asyncSubmit, asyncStatus, asyncResult]
+- name: carcutter-vehicle-inventory-sync
+  file: meero-vehicle-inventory-sync.md
+  description: Upsert vehicle records, read status, pull the shot list, delete records.
+  operations: ['POST /vehicle/submission', 'POST /vehicle/list', 'GET /vehicle/status', 'GET /vehicle/shotlist', 'DELETE /vehicle/delete']
+- name: carcutter-vehicle-feature-hotspots
+  file: meero-vehicle-feature-hotspots.md
+  description: Create, read and remove feature/damage hotspot annotations on a vehicle.
+  operations: [featureSubmit, featuresGet, featureGet, featureDelete, featuresDelete]

@@ -1,0 +1,105 @@
+generated: '2026-08-25'
+method: probed
+source: live GET of /.well-known/* on every CarCutter (Meero/Diffusely) host, 2026-08-25
+note: 'www.carcutter.com is a WordPress site whose 404 handler answers 200 with the full HTML
+  homepage shell (242,301 bytes). Every /.well-known/* path below that is recorded as
+  html_shell: true returned that shell, not a document, and is treated as a MISS. Only the two
+  OAuth metadata documents returned real JSON — they belong to the CarCutter remote MCP server
+  (see mcp/meero-mcp.yml). meero.com no longer serves Meero: it answers with an Apache2 Ubuntu
+  default page under a certificate for CN=forlog.fr.'
+hosts:
+- host: www.carcutter.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: meero-carcutter-oauth-authorization-server.json
+    note: RFC 8414 authorization server metadata for the CarCutter MCP OAuth server; PKCE S256, scope "mcp".
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: meero-carcutter-oauth-protected-resource.json
+    note: RFC 9728 protected resource metadata; names the MCP resource https://www.carcutter.com/wp-json/mcp/mcp-oauth-server
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 200
+    html_shell: true
+    note: 200 returned the WordPress homepage HTML, not an OpenID document — treated as absent.
+  - path: /.well-known/api-catalog
+    status: 200
+    html_shell: true
+    note: 200 returned the WordPress homepage HTML — treated as absent.
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    html_shell: true
+  - path: /.well-known/agent-card.json
+    status: 200
+    html_shell: true
+  - path: /.well-known/agent.json
+    status: 200
+    html_shell: true
+- host: api.car-cutter.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: cloud.car-cutter.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+    note: S3-backed docs origin; every unlisted key returns an AccessDenied XML body.
+  - path: /.well-known/api-catalog
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+- host: hub.car-cutter.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: auth.eu.car-cutter.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: meero-carcutter-auth-openid-configuration.json
+    note: 'Auth0-backed OpenID Connect provider for CarCutter Hub. Discovered from the Hub login
+      redirect, which carries audience=https://api2.car-cutter.com — a second, fully gated API
+      Gateway host (403 "Missing Authentication Token" on every path, no public contract).'
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+  - path: /.well-known/jwks.json
+    status: 200
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+- host: api2.car-cutter.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 403
+    note: AWS API Gateway; every path returns {"message":"Missing Authentication Token"}. No anonymous document is served.
+- host: meero.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404

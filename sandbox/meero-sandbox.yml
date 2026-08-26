@@ -1,0 +1,38 @@
+generated: '2026-08-25'
+method: probed
+source: https://github.com/carcutter/carcutter-api-samples + live probe of https://api.car-cutter.com on 2026-08-25
+summary: 'CarCutter publishes a keyless public demo of its image-composition endpoint plus a hosted
+  demo Web UI. There is no test/live key duality, no sandbox account, no test fixtures and no time
+  simulation — the demo is a single unauthenticated production path on the production host.'
+modes:
+- name: public demo
+  auth: none
+  endpoint: POST https://api.car-cutter.com/vehicle/composition/segment
+  documented_at: https://github.com/carcutter/carcutter-api-samples
+  probe:
+    request: POST with multipart cut_type=none and no image file, no Authorization header
+    http_status: 400
+    body: '{"error":{"code":400,"message":"invalid file"}}'
+    checked: '2026-08-25'
+    interpretation: 'The endpoint accepted an unauthenticated request and rejected it on input
+      validation, not on authorization — confirming the demo path is genuinely keyless.'
+  supported_parameters:
+    cut_type: [complete, normal, blur, none]
+  note: 'The samples repo documents /vehicle/composition/segment; the current OpenAPI documents
+    /vehicle/composition/single-segment as the authenticated synchronous path. Both were reachable
+    on 2026-08-25.'
+- name: hosted demo UI
+  url: https://demo.car-cutter.com/
+  auth: none observed (HTTP 200)
+  note: Browser tool for uploading an image and experimenting with cut types.
+test_credentials:
+  published: false
+  note: No test API keys, test tokens or test vehicle identifiers are published. Nothing of that kind is invented here.
+test_data:
+  fixtures: 'The samples repository ships example source images (images/source/front-left.jpg, side-left.jpg, front.jpg) used by its curl examples.'
+time_simulation:
+  supported: false
+billing_isolation:
+  supported: false
+  note: 'Authenticated calls consume account image-processing credits (402 "Credits exceeded. Please
+    contact sales."). There is no non-billable test mode for authenticated operations.'

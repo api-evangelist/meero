@@ -1,0 +1,30 @@
+generated: '2026-08-25'
+method: probed
+source: https://cloud.car-cutter.com/doc/api.html + live unauthenticated responses from https://api.car-cutter.com on 2026-08-25
+limit_count: 0
+limits: []
+headers: []
+note: 'CarCutter publishes no rate limits. The OpenAPI declares no 429 response on any of its 14
+  operations and no RateLimit-*, X-RateLimit-* or Retry-After header. Two live responses were
+  inspected on 2026-08-25 — a 400 from the keyless demo composition endpoint and a 401 from
+  /vehicle/status — and neither carried any rate-limit header; only nginx and CloudFront
+  infrastructure headers were present. An agent has no runtime signal to back off on.'
+observed_responses:
+- request: POST https://api.car-cutter.com/vehicle/composition/segment (unauthenticated)
+  status: 400
+  rate_limit_headers: none
+- request: GET https://api.car-cutter.com/vehicle/status?vehicle_id=test (unauthenticated)
+  status: 401
+  rate_limit_headers: none
+quota:
+  kind: prepaid credits
+  exhaustion_status: 402
+  exhaustion_body: '{"code": 402, "message": "Credits exceeded. Please contact sales."}'
+  retry_after: false
+  note: 'This is a commercial credit balance, not a rate limit — it does not reset on a window and
+    carries no Retry-After. It is recorded here because it is the only throttling-shaped response
+    the contract documents.'
+throughput_guidance:
+  published: false
+  note: 'The contract offers a processing_speed parameter (normal | lazy) that lets the caller trade
+    latency for cost, but publishes no requests-per-second guidance.'

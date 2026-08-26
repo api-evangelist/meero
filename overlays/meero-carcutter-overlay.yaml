@@ -1,0 +1,65 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Car-Cutter API
+  version: 1.0.0
+extends: ../openapi/meero-carcutter-openapi.json
+x-generated: '2026-08-25'
+x-method: generated
+x-source: openapi/meero-carcutter-openapi.json + live probes of https://api.car-cutter.com on 2026-08-25
+x-note: 'Non-destructive enhancements only. Every action below adds documentation or an
+  operationId that the original contract omits; nothing invents behaviour. The five vehicle
+  operations ship with no operationId at all, which makes them unaddressable by generated clients
+  and by any tool crosswalk — the identifiers added here follow the naming style CarCutter already
+  uses on its nine other operations (syncSubmit, asyncStatus, featureGet ...).'
+actions:
+- target: $.info
+  update:
+    contact:
+      name: CarCutter (DIFFUSELY Austria GmbH)
+      email: hello@car-cutter.com
+      url: https://www.carcutter.com/contact/
+    x-operated-by: 'DIFFUSELY Austria GmbH — Diffusely is the December 2024 rename of Meero; the API host root returns "(c) 2026 Meero Austria GmbH".'
+    x-status-page: https://carcutter.statuspage.io/
+- target: $.paths['/vehicle/submission'].post
+  update:
+    operationId: vehicleSubmit
+    x-idempotent: true
+    x-idempotency-note: Upsert on the caller-supplied vehicle_id; a retry updates rather than duplicates and resets app_status to "new".
+- target: $.paths['/vehicle/list'].post
+  update:
+    operationId: vehicleList
+    x-pagination: none
+    x-pagination-note: The contract declares no limit, offset or cursor parameter; the result set is unbounded.
+- target: $.paths['/vehicle/status'].get
+  update:
+    operationId: vehicleGet
+- target: $.paths['/vehicle/delete'].delete
+  update:
+    operationId: vehicleDelete
+    x-reversibility: none-documented
+    x-reversibility-note: No documented undo or restore path and no stated window.
+- target: $.paths['/vehicle/shotlist'].get
+  update:
+    operationId: vehicleShotlist
+- target: $.paths['/vehicle/composition/single-segment'].post
+  update:
+    x-billable: true
+    x-billable-note: Consumes account image-processing credits; returns 402 "Credits exceeded" when the balance is out.
+    x-safe-to-retry: false
+- target: $.paths['/vehicle/image/submission'].post
+  update:
+    x-billable: true
+    x-safe-to-retry: false
+    x-completion-signal: polling
+    x-completion-note: No webhook or callback exists; poll GET /vehicle/image/status (asyncStatus) until status is final, error or expired.
+- target: $.paths['/vehicle/image/result'].get
+  update:
+    x-retention: time-limited
+    x-retention-note: Returns 410 "file does not exist anymore." once a result expires. CarCutter does not publish the retention window.
+- target: $.paths['/vehicle/features/delete'].delete
+  update:
+    x-consequence: high
+    x-consequence-note: Removes every feature annotation on a vehicle in one call, with no confirmation parameter and no bulk restore.
+- target: $.components.securitySchemes.api_key
+  update:
+    description: 'HTTP bearer token issued per CarCutter account. The scheme is named "api_key" but is declared type http / scheme bearer, not an apiKey scheme.'

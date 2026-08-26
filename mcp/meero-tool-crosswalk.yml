@@ -1,0 +1,72 @@
+generated: '2026-08-25'
+method: derived
+source: openapi/meero-carcutter-openapi.json + mcp/meero-mcp.yml
+summary: 'CarCutter runs two non-overlapping surfaces. The REST contract (api.car-cutter.com,
+  OpenAPI 3.1, 14 operations) covers vehicle records and image processing. The MCP server is
+  mounted on the WordPress marketing site (www.carcutter.com/wp-json/mcp/...) and is OAuth-gated,
+  so its tool set could not be enumerated anonymously. No binding can be asserted between them
+  without an authenticated tools/list, and none is invented here.'
+surfaces:
+  openapi:
+    file: openapi/meero-carcutter-openapi.json
+    server: https://api.car-cutter.com
+    gated: false
+    note: The /vehicle/composition/segment demo path is keyless; all other operations require a bearer token.
+  mcp:
+    url: https://www.carcutter.com/wp-json/mcp/mcp-oauth-server
+    gated: true
+    gate: OAuth 2.0 bearer (401 mcp_unauthorized on anonymous tools/list)
+  graphql: null
+crosswalk: []
+mcp_only:
+- tool: unknown
+  reason: tools/list is OAuth-gated; the tool set could not be read anonymously on 2026-08-25.
+rest_only:
+- operation: POST /vehicle/submission
+  summary: Add or Update a Vehicle
+  operationId: null
+- operation: POST /vehicle/list
+  summary: List Vehicles
+  operationId: null
+- operation: GET /vehicle/status
+  summary: Get Vehicle
+  operationId: null
+- operation: DELETE /vehicle/delete
+  summary: Delete Vehicle
+  operationId: null
+- operation: GET /vehicle/shotlist
+  summary: List Vehicles to Shoot
+  operationId: null
+- operation: POST /vehicle/composition/single-segment
+  summary: Synchronously process an image
+  operationId: syncSubmit
+- operation: POST /vehicle/image/submission
+  summary: Submit an image for asynchronous processing
+  operationId: asyncSubmit
+- operation: GET /vehicle/image/status
+  summary: Get current status of images
+  operationId: asyncStatus
+- operation: GET /vehicle/image/result
+  summary: Retrieve Cut Result
+  operationId: asyncResult
+- operation: POST /vehicle/feature/submission
+  summary: Submit a feature for a vehicle
+  operationId: featureSubmit
+- operation: GET /vehicle/features
+  summary: Get all features of a vehicle
+  operationId: featuresGet
+- operation: GET /vehicle/feature
+  summary: Get a feature of a vehicle
+  operationId: featureGet
+- operation: DELETE /vehicle/features/delete
+  summary: Delete all features of a vehicle
+  operationId: featuresDelete
+- operation: DELETE /vehicle/feature/delete
+  summary: Delete a feature of a vehicle
+  operationId: featureDelete
+coverage:
+  rest_operations: 14
+  rest_operations_with_operationid: 9
+  mcp_tools: null
+  bound: 0
+  confidence: 'none — the MCP schema is gated'
