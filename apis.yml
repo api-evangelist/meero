@@ -29,28 +29,68 @@ tags:
 - Vehicle Merchandising
 - Company
 apis:
-- aid: meero:carcutter-api
-  name: Car-Cutter API
-  description: 'The Car-Cutter API is the public REST contract for CarCutter vehicle image
-    processing. It covers vehicle inventory records and shot lists, synchronous single-image
-    composition, asynchronous batch image submission with status polling and result retrieval,
-    and the Feature (hotspot) API for annotating vehicle equipment and damage. Authentication is
-    an HTTP bearer token; the composition endpoint also exposes a keyless public demo mode.'
+- aid: meero:meero-asynchronous-api
+  name: Meero Asynchronous API
+  description: Asynchronous API
   humanURL: https://cloud.car-cutter.com/doc/api.html
   baseURL: https://api.car-cutter.com
   tags:
-  - Automotive
-  - Images
-  - Vehicle Merchandising
+  - asynchronous
   properties:
   - type: OpenAPI
-    url: openapi/meero-carcutter-openapi.json
+    url: openapi/meero-asynchronous-api-openapi.yml
   - type: Documentation
     url: https://cloud.car-cutter.com/doc/api.html
   - type: APIReference
     url: https://cloud.car-cutter.com/doc/api.html
-  - type: Overlay
-    url: overlays/meero-carcutter-overlay.yaml
+  - type: Examples
+    url: https://github.com/carcutter/carcutter-api-samples
+- aid: meero:meero-feature-api
+  name: Meero Feature API
+  description: Feature API
+  humanURL: https://cloud.car-cutter.com/doc/api.html
+  baseURL: https://api.car-cutter.com
+  tags:
+  - feature
+  properties:
+  - type: OpenAPI
+    url: openapi/meero-feature-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.car-cutter.com/doc/api.html
+  - type: APIReference
+    url: https://cloud.car-cutter.com/doc/api.html
+  - type: Examples
+    url: https://github.com/carcutter/carcutter-api-samples
+- aid: meero:meero-synchronous-api
+  name: Meero Synchronous API
+  description: Synchronous API
+  humanURL: https://cloud.car-cutter.com/doc/api.html
+  baseURL: https://api.car-cutter.com
+  tags:
+  - synchronous
+  properties:
+  - type: OpenAPI
+    url: openapi/meero-synchronous-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.car-cutter.com/doc/api.html
+  - type: APIReference
+    url: https://cloud.car-cutter.com/doc/api.html
+  - type: Examples
+    url: https://github.com/carcutter/carcutter-api-samples
+- aid: meero:meero-vehicle-api
+  name: Meero Vehicle API
+  description: Vehicle API
+  humanURL: https://cloud.car-cutter.com/doc/api.html
+  baseURL: https://api.car-cutter.com
+  tags:
+  - vehicle
+  properties:
+  - type: OpenAPI
+    url: openapi/meero-vehicle-api-openapi.yml
+  - type: Documentation
+    url: https://cloud.car-cutter.com/doc/api.html
+  - type: APIReference
+    url: https://cloud.car-cutter.com/doc/api.html
   - type: Examples
     url: https://github.com/carcutter/carcutter-api-samples
 maintainers:
@@ -59,6 +99,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/meero-carcutter-overlay.yaml
 - type: DomainSecurity
   url: security/meero-domain-security.yml
 - type: Authentication
