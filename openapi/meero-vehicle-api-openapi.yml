@@ -1,0 +1,236 @@
+openapi: 3.2.0
+info:
+  description: 'Global #1 visual AI editing and optimisation solution for the automotive industry'
+  version: 2.60.65
+  title: Car-Cutter Vehicle API
+  termsOfService: https://www.car-cutter.com/terms
+  contact:
+    email: hello@car-cutter.com
+  license:
+    name: Proprietary
+    url: https://www.car-cutter.com
+servers:
+- url: https://api.car-cutter.com
+  description: Public API Server.
+security:
+- api_key: []
+tags:
+- name: vehicle
+  description: Vehicle API
+  x-displayName: Vehicle API
+paths:
+  /vehicle/submission:
+    post:
+      summary: Add or Update a Vehicle
+      description: If a vehicle with that id already exists, it is updated and its status is set to new.
+      tags:
+      - vehicle
+      consumes:
+      - application/form-data
+      produces:
+      - application/json
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - vehicle_id
+              properties:
+                vehicle_id:
+                  type: string
+                  description: Use the VIN if possible
+                vehicle_manufacturer:
+                  type: string
+                  example: Audi
+                vehicle_model:
+                  type: string
+                  example: A4 B8 2.0 TDI
+                vehicle_model_ext:
+                  type: string
+                vehicle_color:
+                  type: string
+                  example: Moroblau Metallic
+                vehicle_location:
+                  type: string
+                vehicle_lot:
+                  type: string
+                custom_reference:
+                  type: string
+                suggested_guideline_id:
+                  type: string
+                  description: guideline that will be suggested when shooting
+                  example: guideline-2
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicle:
+                    $ref: '#/components/schemas/Vehicle'
+          description: Successful response
+  /vehicle/list:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - customer
+              properties:
+                customer:
+                  type: string
+                  description: The user id
+                filters:
+                  type: array
+                  description: Only retrieve vehicles which have a match on all specified (column, values) pairs.
+                  items:
+                    type: object
+                    properties:
+                      column:
+                        type: string
+                      values:
+                        type: array
+                sort_by:
+                  type: string
+                  enum:
+                  - last_update
+                  description: Field to sort values on
+                sort_direction:
+                  type: string
+                  enum:
+                  - ASC
+                  - DESC
+                limit:
+                  type: integer
+                  minimum: 1
+                  description: Return up to n results
+                offset:
+                  type: integer
+                  minimum: 0
+                  description: Skip the first n results
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+          description: Successful response
+      tags:
+      - vehicle
+      summary: List Vehicles
+  /vehicle/status:
+    get:
+      summary: Get Vehicle
+      description: The status can be new, active or deleted.
+      parameters:
+      - name: vehicle_id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicle:
+                    $ref: '#/components/schemas/Vehicle'
+          description: Successful response
+      tags:
+      - vehicle
+  /vehicle/delete:
+    delete:
+      summary: Delete Vehicle
+      description: Sets the status of a vehicle to DELETED.
+      parameters:
+      - name: vehicle_id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicle:
+                    $ref: '#/components/schemas/Vehicle'
+          description: Successful response
+      tags:
+      - vehicle
+  /vehicle/shotlist:
+    get:
+      tags:
+      - vehicle
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicles:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Vehicle'
+          description: Successful response
+      summary: List Vehicles to Shoot
+      description: Return all vehicles with status new
+components:
+  schemas:
+    Vehicle:
+      type: object
+      properties:
+        vehicle_id:
+          type: string
+        app_status:
+          type: string
+          example: new
+        app_status_updated:
+          type: string
+          example: 2024/03/01, 09:59:55
+        vehicle_manufacturer:
+          type: string
+          example: Audi
+        vehicle_model:
+          type: string
+          example: A4 B8 2.0 TDI
+        vehicle_model_ext:
+          type: string
+        vehicle_color:
+          type: string
+          example: Moroblau Metallic
+        vehicle_location:
+          type: string
+        vehicle_lot:
+          type: string
+        custom_reference:
+          type: string
+        suggested_guideline_id:
+          type: string
+          example: guideline-2
+  securitySchemes:
+    api_key:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: Find out more about Car-Cutter
+  url: https://www.car-cutter.com
+x-navigateMethodsByName: true
+x-sortMethodsBy:
+- path
+- operation

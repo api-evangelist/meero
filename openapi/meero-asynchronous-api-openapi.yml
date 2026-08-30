@@ -1,0 +1,324 @@
+openapi: 3.2.0
+info:
+  description: 'Global #1 visual AI editing and optimisation solution for the automotive industry'
+  version: 2.60.65
+  title: Car-Cutter Asynchronous API
+  termsOfService: https://www.car-cutter.com/terms
+  contact:
+    email: hello@car-cutter.com
+  license:
+    name: Proprietary
+    url: https://www.car-cutter.com
+servers:
+- url: https://api.car-cutter.com
+  description: Public API Server.
+security:
+- api_key: []
+tags:
+- name: asynchronous
+  description: Asynchronous API
+  x-displayName: Asynchronous API
+paths:
+  /vehicle/image/submission:
+    post:
+      tags:
+      - asynchronous
+      summary: Submit an image for asynchronous processing
+      description: ''
+      operationId: asyncSubmit
+      consumes:
+      - application/form-data
+      produces:
+      - application/json
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - image_url
+              properties:
+                image_url:
+                  type: array
+                  items:
+                    type: string
+                  collectionFormat: multi
+                  description: URL to the image that you want to process. You can repeat this parameter up to 60 times to submit multiple images.
+                cut_type:
+                  description: The cut type to perform on all images in this request. If this parameter is not supplied, the cut type will be read from the user configuration.
+                  $ref: '#/definitions/CutTypeSchema'
+                guideline_id:
+                  type: string
+                  description: The guideline that you want to select for processing.
+                location_id:
+                  type: string
+                  description: The ID of the location (e.g. store) from which this request is sent.
+                processing_speed:
+                  required: false
+                  description: The processing speed defines how fast the image will be cut and retouched.
+                  type: string
+                  default: normal
+                  enum:
+                  - normal
+                  - lazy
+                vehicle_id:
+                  type: string
+                  description: The ID of the vehicle to which the image belongs (e.g. VIN). It is recommend that you specify this parameter, otherwise all images will be assigned to the same vehicle.
+                webhook_url:
+                  type: string
+                  description: If your account has a webhook target enabled, this parameter can be used to define a custom webhook to use with the images submitted in this request.
+                retouching_accuracy:
+                  required: false
+                  description: The retouching accuracy defines the level of detail that we take for retouching.
+                  type: string
+                  default: normal
+                  enum:
+                  - normal
+                  - precise
+                custom_json:
+                  type: string
+                  description: Provide a custom JSON document, which is stored in our system alongside the image. This is not used to determine any processing steps, it's solely used to exchange additional identifiers between CarCutter and customers for human discussions.
+                license_plate:
+                  type: bytes
+                  description: Provide a custom license plate inlay PNG image with RGBA channels.
+                overlay:
+                  type: bytes
+                  description: Provide a custom overlay PNG image with RGBA channels.
+                scene_id:
+                  type: string
+                  description: Provide a custom scene identification.
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/ImageStatusResponse'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/InputErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/UnauthorizedResponse'
+        '402':
+          description: Credits exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/CreditsExceededResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/InternalServerErrorResponse'
+  /vehicle/image/status:
+    get:
+      tags:
+      - asynchronous
+      summary: Get current status of images
+      description: ''
+      operationId: asyncStatus
+      parameters:
+      - name: image_url
+        in: query
+        description: URL of the image. May be repeated multiple times to retrieve the status for multiple images.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/ImageStatusResponse'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/InputErrorResponse'
+  /vehicle/image/result:
+    get:
+      tags:
+      - asynchronous
+      summary: Retrieve Cut Result
+      description: ''
+      operationId: asyncResult
+      parameters:
+      - name: image_url
+        in: query
+        description: URL of the image to be retrieved.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Cut result. By default this in JPEG format, but this can be changed in your customer configuration file. If you have configured multiple output images for a single input image, only the first one is returned.
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/InputErrorResponse'
+        '404':
+          description: Image not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/ImageNotFoundResponse'
+        '410':
+          description: Image expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/ImageExpiredResponse'
+components:
+  securitySchemes:
+    api_key:
+      type: http
+      scheme: bearer
+definitions:
+  CutTypeSchema:
+    type: string
+    enum:
+    - complete
+    - normal
+    - blur
+    - none
+  UnauthorizedResponse:
+    title: Unauthorized Response
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    example:
+      code: 401
+      message: submitted 'Bearer' token is unauthorized
+  InternalServerErrorResponse:
+    title: Internal Server Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 500
+      message:
+        type: string
+  ImageStatusResponse:
+    title: Image Status Response
+    type: object
+    properties:
+      data:
+        type: object
+        properties:
+          images:
+            type: array
+            items:
+              $ref: '#/definitions/ImageStatus'
+  ImageNotFoundResponse:
+    type: object
+    title: Image Not Found Response
+    properties:
+      code:
+        type: integer
+        example: 404
+      message:
+        type: string
+        example: no such image
+  InputErrorResponse:
+    title: Input Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 400
+      message:
+        type: string
+  ImageStatus:
+    title: Image Status
+    type: object
+    properties:
+      image:
+        type: string
+        description: URL of the image as provided in the input
+        example: http://example.org/CARCUTTER-image-01.jpg
+      angle:
+        $ref: '#/definitions/MultiLevelAngle'
+      status:
+        type: string
+        description: Status of the image. More possible status values might be introduced in the future.
+        enum:
+        - processing
+        - undefined
+        - raw
+        - final
+        - error
+        - expired
+        - unknown
+      phase:
+        type: string
+        description: Phase of the image in the processing pipeline. More possible phases might be introduced in the future.
+        enum:
+        - unknown
+        - downloading
+        - analyzing
+        - cutting
+        - qa-ing
+        - retouching
+        - ready
+      quality:
+        type: string
+        description: Quality of the image as detected by AI or retouching. More possible quality values might be introduced in the future.
+        enum:
+        - ok
+        - retake
+        - null
+  MultiLevelAngle:
+    type: array
+    items:
+      type: string
+    description: The angle of the picture in a multi-level notation. Currently there are up to two levels. The first level determines the type of view, the second determines the detailed angle. Some angles have only one level.
+    example:
+    - exterior
+    - side-left
+  ImageExpiredResponse:
+    title: Image Expired Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 410
+      message:
+        type: string
+        example: file does not exist anymore.
+  CreditsExceededResponse:
+    title: Credits Exceeded Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 402
+      message:
+        type: string
+        example: Credits exceeded. Please contact sales.
+externalDocs:
+  description: Find out more about Car-Cutter
+  url: https://www.car-cutter.com
+x-navigateMethodsByName: true
+x-sortMethodsBy:
+- path
+- operation

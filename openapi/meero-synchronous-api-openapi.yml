@@ -1,0 +1,241 @@
+openapi: 3.2.0
+info:
+  description: 'Global #1 visual AI editing and optimisation solution for the automotive industry'
+  version: 2.60.65
+  title: Car-Cutter Synchronous API
+  termsOfService: https://www.car-cutter.com/terms
+  contact:
+    email: hello@car-cutter.com
+  license:
+    name: Proprietary
+    url: https://www.car-cutter.com
+servers:
+- url: https://api.car-cutter.com
+  description: Public API Server.
+security:
+- api_key: []
+tags:
+- name: synchronous
+  description: Synchronous API
+  x-displayName: Synchronous API
+paths:
+  /vehicle/composition/single-segment:
+    post:
+      tags:
+      - synchronous
+      summary: Synchronously process an image
+      description: ''
+      operationId: syncSubmit
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - image
+              - image_url
+              - cut_type
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: Upload the image that you want to process. Either this or `image_url` is required.
+                image_url:
+                  type: string
+                  description: URL to the image that you want to process. Either this or `image` is required.
+                cut_type:
+                  type: string
+                  description: The cut type to perform on the submitted image.
+                  $ref: '#/definitions/CutTypeSchema'
+                location:
+                  type: string
+                  description: The location of the store at which this image is taken.
+                guideline:
+                  type: string
+                  description: The guideline to use to process this image, different guidelines can specify different processing behaviours.
+                processing_speed:
+                  description: The processing speed defines how fast the image will be cut and retouched
+                  $ref: '#/definitions/ProcessingSpeedSchema'
+                resolution:
+                  description: The pixel resolution for the output image, width and height separated by `x`
+                  type: string
+                  example: 1600x1200
+                scene_id:
+                  description: The ID of the 3D scene that you want to use as the background for the image.
+                  type: string
+                padding_id:
+                  description: The padding ID defines how big the border around your car should be on each side. Padding IDs refer to predefined paddings which are available on the server. If you want to use custom paddings, use the other padding parameters.
+                  type: string
+                padding_x:
+                  description: How much border there should be around the car on the left and right side (relative number between 0 and 1).
+                  type: string
+                padding_y:
+                  description: How much border there should be around the car on the top and bottom of the image (relative number between 0 and 1).
+                  type: string
+                padding_add_bottom:
+                  description: Make the border at the bottom of the image wider (relative number between 0 and 1).
+                  type: string
+                padding_add_top:
+                  description: Make the border at the top of the image wider (relative number between 0 and 1).
+                  type: string
+                padding_add_left:
+                  description: Make the border at the left side of the image wider (relative number between 0 and 1).
+                  type: string
+                padding_add_right:
+                  description: Make the border at the right side of the image wider (relative number between 0 and 1).
+                  type: string
+                offset_background:
+                  description: Set this to `true` for turntable backgrounds, to `false` for straight edge backgrounds.
+                  type: string
+                blurring_license_plate:
+                  type: bool
+                  description: Whether license plates should be detected and blurred.
+                underground_3d:
+                  type: bool
+                  description: Enables or disables the 3D underground. We recommend that you use 3D scenes insteads. If you don't use 3D scenes, 3D underground is the next best option. Only disable 3D undergrounds if you want to submit your own underground as a JPG image.
+                upload_only:
+                  type: bool
+                  description: Whether this image should only be uploaded and put into a queue without immediate response. This attribute is deprecated, use the asynchronous API instead.
+                  deprecated: true
+                from_manual_retouching:
+                  type: bool
+                  description: Only used internally. Specifies whether an image comes from manual retouching. This attribute is deprecated.
+                  deprecated: true
+                retouching_accuracy:
+                  description: The retouching accuracy defines the level of detail that we take for retouching
+                  $ref: '#/definitions/RetouchingAccuracySchema'
+                custom_json:
+                  type: string
+                  description: Provide a custom JSON document, which is stored in our system alongside the image. This is not used to determine any processing steps, it's solely used to exchange additional identifiers between CarCutter and customers for human discussions.
+                background:
+                  type: bytes
+                  description: Provide a custom background JPG image with RGB channels.
+                license_plate:
+                  type: bytes
+                  description: Provide a custom license plate inlay PNG image with RGBA channels.
+                overlay:
+                  type: bytes
+                  description: Provide a custom overlay PNG image with RGBA channels.
+      responses:
+        '200':
+          description: Either the image encoded with base64, or for `none`-cuts an empty JSON response. The image format behind base64 is by default JPEG, but can be changed in your customer configuration file. If multiple output images are configured, only the first one is returned.
+          content:
+            plain/text:
+              schema:
+                type: string
+                title: Base64 Image Representation
+            application/json:
+              schema:
+                type: object
+                title: Empty Response
+                properties: {}
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/InputErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/UnauthorizedResponse'
+        '402':
+          description: Credits exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/CreditsExceededResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/ForbiddenResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/InternalServerErrorResponse'
+components:
+  securitySchemes:
+    api_key:
+      type: http
+      scheme: bearer
+definitions:
+  CutTypeSchema:
+    type: string
+    enum:
+    - complete
+    - normal
+    - blur
+    - none
+  RetouchingAccuracySchema:
+    type: string
+    default: normal
+    enum:
+    - normal
+    - precise
+  ForbiddenResponse:
+    title: Forbidden Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 403
+      message:
+        type: string
+  UnauthorizedResponse:
+    title: Unauthorized Response
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    example:
+      code: 401
+      message: submitted 'Bearer' token is unauthorized
+  InternalServerErrorResponse:
+    title: Internal Server Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 500
+      message:
+        type: string
+  ProcessingSpeedSchema:
+    type: string
+    default: normal
+    enum:
+    - normal
+    - lazy
+  InputErrorResponse:
+    title: Input Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 400
+      message:
+        type: string
+  CreditsExceededResponse:
+    title: Credits Exceeded Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 402
+      message:
+        type: string
+        example: Credits exceeded. Please contact sales.
+externalDocs:
+  description: Find out more about Car-Cutter
+  url: https://www.car-cutter.com
+x-navigateMethodsByName: true
+x-sortMethodsBy:
+- path
+- operation

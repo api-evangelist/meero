@@ -1,0 +1,355 @@
+openapi: 3.2.0
+info:
+  description: 'Global #1 visual AI editing and optimisation solution for the automotive industry'
+  version: 2.60.65
+  title: Car-Cutter Feature API
+  termsOfService: https://www.car-cutter.com/terms
+  contact:
+    email: hello@car-cutter.com
+  license:
+    name: Proprietary
+    url: https://www.car-cutter.com
+servers:
+- url: https://api.car-cutter.com
+  description: Public API Server.
+security:
+- api_key: []
+tags:
+- name: feature
+  description: Feature API
+  x-displayName: Feature API
+paths:
+  /vehicle/feature/submission:
+    post:
+      tags:
+      - feature
+      summary: Submit a feature for a vehicle
+      description: ''
+      operationId: featureSubmit
+      consumes:
+      - application/form-data
+      produces:
+      - application/json
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - vehicle_id
+              - title
+              - icon
+              - type
+              properties:
+                vehicle_id:
+                  type: string
+                  description: ID of the vehicle (usually the vin).
+                title:
+                  type: string
+                  description: The title text of the feature (hover text).
+                description:
+                  type: string
+                  description: Additional information about the feature.
+                icon:
+                  type: string
+                  description: The icon that should be displayed in the webplayer.
+                type:
+                  type: string
+                  description: This field describes what the type of the feature it is, e.g. text, doc, href, ...
+                feature_rule_name:
+                  type: string
+                  description: Feature rule name that is used for assigning features to hotspots.
+                annotation_id:
+                  type: string
+                  description: Public ID of an annotation.
+                detail_image_id:
+                  type: string
+                  description: Public ID of an image. This is used for linking the feature to the specified image (click of it opens this detail image).
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: Feature ID
+                type: object
+                properties:
+                  feature_id:
+                    type: string
+                    description: Public ID of the created feature.
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/InputErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/UnauthorizedResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/InternalServerErrorResponse'
+  /vehicle/features:
+    get:
+      tags:
+      - feature
+      summary: Get all features of a vehicle
+      description: ''
+      operationId: featuresGet
+      consumes:
+      - application/form-data
+      produces:
+      - application/json
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - vehicle_id
+              properties:
+                vehicle_id:
+                  type: string
+                  description: ID of the vehicle (usually the vin).
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: Features
+                type: object
+                properties:
+                  features:
+                    type: array
+                    items:
+                      schema:
+                        $ref: '#/definitions/FeatureSchema'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/InputErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/UnauthorizedResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/InternalServerErrorResponse'
+  /vehicle/feature:
+    get:
+      tags:
+      - feature
+      summary: Get a feature of a vehicle
+      description: ''
+      operationId: featureGet
+      consumes:
+      - application/form-data
+      produces:
+      - application/json
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - feature_id
+              properties:
+                feature_id:
+                  type: string
+                  description: ID of the feature.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: Feature
+                type: object
+                properties:
+                  features:
+                    type: array
+                    items:
+                      schema:
+                        $ref: '#/definitions/FeatureSchema'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/InputErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/UnauthorizedResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/InternalServerErrorResponse'
+  /vehicle/features/delete:
+    delete:
+      tags:
+      - feature
+      summary: Delete all features of a vehicle
+      description: ''
+      operationId: featuresDelete
+      consumes:
+      - application/form-data
+      produces:
+      - application/json
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - vehicle_id
+              properties:
+                vehicle_id:
+                  type: string
+                  description: ID of the vehicle (usually the vin).
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: Deleted Feature IDs
+                type: object
+                properties:
+                  deleted_features:
+                    type: array
+                    items:
+                      schema:
+                        $ref: '#/definitions/FeatureSchema'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/InputErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/UnauthorizedResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/InternalServerErrorResponse'
+  /vehicle/feature/delete:
+    delete:
+      tags:
+      - feature
+      summary: Delete a feature of a vehicle
+      description: ''
+      operationId: featureDelete
+      consumes:
+      - application/form-data
+      produces:
+      - application/json
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - feature_id
+              properties:
+                feature_id:
+                  type: string
+                  description: ID of the feature.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: Deleted feature ID
+                type: object
+                properties:
+                  deleted_features:
+                    type: array
+                    items:
+                      schema:
+                        $ref: '#/definitions/FeatureSchema'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/InputErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/UnauthorizedResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/InternalServerErrorResponse'
+components:
+  securitySchemes:
+    api_key:
+      type: http
+      scheme: bearer
+definitions:
+  UnauthorizedResponse:
+    title: Unauthorized Response
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    example:
+      code: 401
+      message: submitted 'Bearer' token is unauthorized
+  InternalServerErrorResponse:
+    title: Internal Server Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 500
+      message:
+        type: string
+  InputErrorResponse:
+    title: Input Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 400
+      message:
+        type: string
+externalDocs:
+  description: Find out more about Car-Cutter
+  url: https://www.car-cutter.com
+x-navigateMethodsByName: true
+x-sortMethodsBy:
+- path
+- operation
