@@ -127,7 +127,7 @@ apis:
   humanURL: https://cloud.car-cutter.com/doc/api.html
   baseURL: https://api.car-cutter.com
   tags:
-  - Vehicle
+  - Vehicles
   tags_raw:
   - vehicle
   properties:
