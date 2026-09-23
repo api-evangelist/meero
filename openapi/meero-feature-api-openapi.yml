@@ -15,14 +15,14 @@ servers:
 security:
 - api_key: []
 tags:
-- name: feature
+- name: Feature
   description: Feature API
   x-displayName: Feature API
 paths:
   /vehicle/feature/submission:
     post:
       tags:
-      - feature
+      - Feature
       summary: Submit a feature for a vehicle
       description: ''
       operationId: featureSubmit
@@ -98,7 +98,7 @@ paths:
   /vehicle/features:
     get:
       tags:
-      - feature
+      - Feature
       summary: Get all features of a vehicle
       description: ''
       operationId: featuresGet
@@ -152,7 +152,7 @@ paths:
   /vehicle/feature:
     get:
       tags:
-      - feature
+      - Feature
       summary: Get a feature of a vehicle
       description: ''
       operationId: featureGet
@@ -206,7 +206,7 @@ paths:
   /vehicle/features/delete:
     delete:
       tags:
-      - feature
+      - Feature
       summary: Delete all features of a vehicle
       description: ''
       operationId: featuresDelete
@@ -260,7 +260,7 @@ paths:
   /vehicle/feature/delete:
     delete:
       tags:
-      - feature
+      - Feature
       summary: Delete a feature of a vehicle
       description: ''
       operationId: featureDelete
@@ -317,6 +317,15 @@ components:
       type: http
       scheme: bearer
 definitions:
+  InputErrorResponse:
+    title: Input Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 400
+      message:
+        type: string
   UnauthorizedResponse:
     title: Unauthorized Response
     type: object
@@ -335,15 +344,6 @@ definitions:
       code:
         type: integer
         example: 500
-      message:
-        type: string
-  InputErrorResponse:
-    title: Input Error Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 400
       message:
         type: string
 externalDocs:

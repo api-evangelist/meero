@@ -1,0 +1,28 @@
+{
+  "provider": "meero",
+  "sources": [
+    "_original/meero-carcutter-openapi.json"
+  ],
+  "outputs": [
+    "meero-asynchronous-api-openapi.yml",
+    "meero-feature-api-openapi.yml",
+    "meero-synchronous-api-openapi.yml",
+    "meero-vehicle-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [
+    "meero-carcutter-openapi.json: dangling $ref: #/definitions/FeatureSchema"
+  ],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "meero-carcutter-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "meero-asynchronous-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "meero-feature-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "meero-synchronous-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "meero-vehicle-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

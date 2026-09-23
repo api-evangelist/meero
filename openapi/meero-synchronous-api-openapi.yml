@@ -15,14 +15,14 @@ servers:
 security:
 - api_key: []
 tags:
-- name: synchronous
+- name: Synchronous
   description: Synchronous API
   x-displayName: Synchronous API
 paths:
   /vehicle/composition/single-segment:
     post:
       tags:
-      - synchronous
+      - Synchronous
       summary: Synchronously process an image
       description: ''
       operationId: syncSubmit
@@ -165,19 +165,36 @@ components:
       type: http
       scheme: bearer
 definitions:
-  CutTypeSchema:
+  InternalServerErrorResponse:
+    title: Internal Server Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 500
+      message:
+        type: string
+  ProcessingSpeedSchema:
     type: string
+    default: normal
     enum:
-    - complete
     - normal
-    - blur
-    - none
+    - lazy
   RetouchingAccuracySchema:
     type: string
     default: normal
     enum:
     - normal
     - precise
+  InputErrorResponse:
+    title: Input Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 400
+      message:
+        type: string
   ForbiddenResponse:
     title: Forbidden Response
     type: object
@@ -198,30 +215,6 @@ definitions:
     example:
       code: 401
       message: submitted 'Bearer' token is unauthorized
-  InternalServerErrorResponse:
-    title: Internal Server Error Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 500
-      message:
-        type: string
-  ProcessingSpeedSchema:
-    type: string
-    default: normal
-    enum:
-    - normal
-    - lazy
-  InputErrorResponse:
-    title: Input Error Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 400
-      message:
-        type: string
   CreditsExceededResponse:
     title: Credits Exceeded Response
     type: object
@@ -232,6 +225,13 @@ definitions:
       message:
         type: string
         example: Credits exceeded. Please contact sales.
+  CutTypeSchema:
+    type: string
+    enum:
+    - complete
+    - normal
+    - blur
+    - none
 externalDocs:
   description: Find out more about Car-Cutter
   url: https://www.car-cutter.com

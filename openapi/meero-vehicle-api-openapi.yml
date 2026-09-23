@@ -15,7 +15,7 @@ servers:
 security:
 - api_key: []
 tags:
-- name: vehicle
+- name: Vehicle
   description: Vehicle API
   x-displayName: Vehicle API
 paths:
@@ -24,7 +24,7 @@ paths:
       summary: Add or Update a Vehicle
       description: If a vehicle with that id already exists, it is updated and its status is set to new.
       tags:
-      - vehicle
+      - Vehicle
       consumes:
       - application/form-data
       produces:
@@ -71,6 +71,8 @@ paths:
                   vehicle:
                     $ref: '#/components/schemas/Vehicle'
           description: Successful response
+      operationId: postVehicleSubmission
+      x-operation-id-source: derived
   /vehicle/list:
     post:
       consumes:
@@ -126,8 +128,10 @@ paths:
                   $ref: '#/components/schemas/Vehicle'
           description: Successful response
       tags:
-      - vehicle
+      - Vehicle
       summary: List Vehicles
+      operationId: postVehicleList
+      x-operation-id-source: derived
   /vehicle/status:
     get:
       summary: Get Vehicle
@@ -149,7 +153,9 @@ paths:
                     $ref: '#/components/schemas/Vehicle'
           description: Successful response
       tags:
-      - vehicle
+      - Vehicle
+      operationId: getVehicleStatus
+      x-operation-id-source: derived
   /vehicle/delete:
     delete:
       summary: Delete Vehicle
@@ -171,11 +177,13 @@ paths:
                     $ref: '#/components/schemas/Vehicle'
           description: Successful response
       tags:
-      - vehicle
+      - Vehicle
+      operationId: deleteVehicleDelete
+      x-operation-id-source: derived
   /vehicle/shotlist:
     get:
       tags:
-      - vehicle
+      - Vehicle
       responses:
         '200':
           content:
@@ -190,6 +198,8 @@ paths:
           description: Successful response
       summary: List Vehicles to Shoot
       description: Return all vehicles with status new
+      operationId: getVehicleShotlist
+      x-operation-id-source: derived
 components:
   schemas:
     Vehicle:

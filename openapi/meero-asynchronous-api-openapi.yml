@@ -15,14 +15,14 @@ servers:
 security:
 - api_key: []
 tags:
-- name: asynchronous
+- name: Asynchronous
   description: Asynchronous API
   x-displayName: Asynchronous API
 paths:
   /vehicle/image/submission:
     post:
       tags:
-      - asynchronous
+      - Asynchronous
       summary: Submit an image for asynchronous processing
       description: ''
       operationId: asyncSubmit
@@ -121,7 +121,7 @@ paths:
   /vehicle/image/status:
     get:
       tags:
-      - asynchronous
+      - Asynchronous
       summary: Get current status of images
       description: ''
       operationId: asyncStatus
@@ -148,7 +148,7 @@ paths:
   /vehicle/image/result:
     get:
       tags:
-      - asynchronous
+      - Asynchronous
       summary: Retrieve Cut Result
       description: ''
       operationId: asyncResult
@@ -191,33 +191,6 @@ components:
       type: http
       scheme: bearer
 definitions:
-  CutTypeSchema:
-    type: string
-    enum:
-    - complete
-    - normal
-    - blur
-    - none
-  UnauthorizedResponse:
-    title: Unauthorized Response
-    type: object
-    properties:
-      code:
-        type: integer
-      message:
-        type: string
-    example:
-      code: 401
-      message: submitted 'Bearer' token is unauthorized
-  InternalServerErrorResponse:
-    title: Internal Server Error Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 500
-      message:
-        type: string
   ImageStatusResponse:
     title: Image Status Response
     type: object
@@ -229,25 +202,6 @@ definitions:
             type: array
             items:
               $ref: '#/definitions/ImageStatus'
-  ImageNotFoundResponse:
-    type: object
-    title: Image Not Found Response
-    properties:
-      code:
-        type: integer
-        example: 404
-      message:
-        type: string
-        example: no such image
-  InputErrorResponse:
-    title: Input Error Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 400
-      message:
-        type: string
   ImageStatus:
     title: Image Status
     type: object
@@ -287,6 +241,15 @@ definitions:
         - ok
         - retake
         - null
+  InternalServerErrorResponse:
+    title: Internal Server Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 500
+      message:
+        type: string
   MultiLevelAngle:
     type: array
     items:
@@ -295,6 +258,15 @@ definitions:
     example:
     - exterior
     - side-left
+  InputErrorResponse:
+    title: Input Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 400
+      message:
+        type: string
   ImageExpiredResponse:
     title: Image Expired Response
     type: object
@@ -315,6 +287,34 @@ definitions:
       message:
         type: string
         example: Credits exceeded. Please contact sales.
+  UnauthorizedResponse:
+    title: Unauthorized Response
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    example:
+      code: 401
+      message: submitted 'Bearer' token is unauthorized
+  ImageNotFoundResponse:
+    type: object
+    title: Image Not Found Response
+    properties:
+      code:
+        type: integer
+        example: 404
+      message:
+        type: string
+        example: no such image
+  CutTypeSchema:
+    type: string
+    enum:
+    - complete
+    - normal
+    - blur
+    - none
 externalDocs:
   description: Find out more about Car-Cutter
   url: https://www.car-cutter.com
