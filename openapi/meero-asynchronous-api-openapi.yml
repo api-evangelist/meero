@@ -191,17 +191,6 @@ components:
       type: http
       scheme: bearer
 definitions:
-  ImageStatusResponse:
-    title: Image Status Response
-    type: object
-    properties:
-      data:
-        type: object
-        properties:
-          images:
-            type: array
-            items:
-              $ref: '#/definitions/ImageStatus'
   ImageStatus:
     title: Image Status
     type: object
@@ -241,63 +230,6 @@ definitions:
         - ok
         - retake
         - null
-  InternalServerErrorResponse:
-    title: Internal Server Error Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 500
-      message:
-        type: string
-  MultiLevelAngle:
-    type: array
-    items:
-      type: string
-    description: The angle of the picture in a multi-level notation. Currently there are up to two levels. The first level determines the type of view, the second determines the detailed angle. Some angles have only one level.
-    example:
-    - exterior
-    - side-left
-  InputErrorResponse:
-    title: Input Error Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 400
-      message:
-        type: string
-  ImageExpiredResponse:
-    title: Image Expired Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 410
-      message:
-        type: string
-        example: file does not exist anymore.
-  CreditsExceededResponse:
-    title: Credits Exceeded Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 402
-      message:
-        type: string
-        example: Credits exceeded. Please contact sales.
-  UnauthorizedResponse:
-    title: Unauthorized Response
-    type: object
-    properties:
-      code:
-        type: integer
-      message:
-        type: string
-    example:
-      code: 401
-      message: submitted 'Bearer' token is unauthorized
   ImageNotFoundResponse:
     type: object
     title: Image Not Found Response
@@ -315,6 +247,74 @@ definitions:
     - normal
     - blur
     - none
+  CreditsExceededResponse:
+    title: Credits Exceeded Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 402
+      message:
+        type: string
+        example: Credits exceeded. Please contact sales.
+  MultiLevelAngle:
+    type: array
+    items:
+      type: string
+    description: The angle of the picture in a multi-level notation. Currently there are up to two levels. The first level determines the type of view, the second determines the detailed angle. Some angles have only one level.
+    example:
+    - exterior
+    - side-left
+  UnauthorizedResponse:
+    title: Unauthorized Response
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    example:
+      code: 401
+      message: submitted 'Bearer' token is unauthorized
+  ImageStatusResponse:
+    title: Image Status Response
+    type: object
+    properties:
+      data:
+        type: object
+        properties:
+          images:
+            type: array
+            items:
+              $ref: '#/definitions/ImageStatus'
+  InputErrorResponse:
+    title: Input Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 400
+      message:
+        type: string
+  InternalServerErrorResponse:
+    title: Internal Server Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 500
+      message:
+        type: string
+  ImageExpiredResponse:
+    title: Image Expired Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 410
+      message:
+        type: string
+        example: file does not exist anymore.
 externalDocs:
   description: Find out more about Car-Cutter
   url: https://www.car-cutter.com

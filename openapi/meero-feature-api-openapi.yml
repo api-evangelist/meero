@@ -317,6 +317,15 @@ components:
       type: http
       scheme: bearer
 definitions:
+  InternalServerErrorResponse:
+    title: Internal Server Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 500
+      message:
+        type: string
   InputErrorResponse:
     title: Input Error Response
     type: object
@@ -337,15 +346,6 @@ definitions:
     example:
       code: 401
       message: submitted 'Bearer' token is unauthorized
-  InternalServerErrorResponse:
-    title: Internal Server Error Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 500
-      message:
-        type: string
 externalDocs:
   description: Find out more about Car-Cutter
   url: https://www.car-cutter.com

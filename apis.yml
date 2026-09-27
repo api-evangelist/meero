@@ -50,7 +50,7 @@ tags:
 - Automotive
 - Image
 - Artificial Intelligence
-- Computer-Vision
+- Computer Vision
 - Photography
 - Media Processing
 - E-Commerce
@@ -66,6 +66,7 @@ tags_raw:
 - E-Commerce
 - Vehicle Merchandising
 - Company
+- Computer-Vision
 apis:
 - aid: meero:meero-asynchronous-api
   name: Meero Asynchronous API

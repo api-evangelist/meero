@@ -165,21 +165,34 @@ components:
       type: http
       scheme: bearer
 definitions:
-  InternalServerErrorResponse:
-    title: Internal Server Error Response
+  CutTypeSchema:
+    type: string
+    enum:
+    - complete
+    - normal
+    - blur
+    - none
+  CreditsExceededResponse:
+    title: Credits Exceeded Response
     type: object
     properties:
       code:
         type: integer
-        example: 500
+        example: 402
       message:
         type: string
-  ProcessingSpeedSchema:
-    type: string
-    default: normal
-    enum:
-    - normal
-    - lazy
+        example: Credits exceeded. Please contact sales.
+  UnauthorizedResponse:
+    title: Unauthorized Response
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    example:
+      code: 401
+      message: submitted 'Bearer' token is unauthorized
   RetouchingAccuracySchema:
     type: string
     default: normal
@@ -195,6 +208,21 @@ definitions:
         example: 400
       message:
         type: string
+  ProcessingSpeedSchema:
+    type: string
+    default: normal
+    enum:
+    - normal
+    - lazy
+  InternalServerErrorResponse:
+    title: Internal Server Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 500
+      message:
+        type: string
   ForbiddenResponse:
     title: Forbidden Response
     type: object
@@ -204,34 +232,6 @@ definitions:
         example: 403
       message:
         type: string
-  UnauthorizedResponse:
-    title: Unauthorized Response
-    type: object
-    properties:
-      code:
-        type: integer
-      message:
-        type: string
-    example:
-      code: 401
-      message: submitted 'Bearer' token is unauthorized
-  CreditsExceededResponse:
-    title: Credits Exceeded Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 402
-      message:
-        type: string
-        example: Credits exceeded. Please contact sales.
-  CutTypeSchema:
-    type: string
-    enum:
-    - complete
-    - normal
-    - blur
-    - none
 externalDocs:
   description: Find out more about Car-Cutter
   url: https://www.car-cutter.com
