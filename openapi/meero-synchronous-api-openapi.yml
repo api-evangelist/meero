@@ -165,23 +165,6 @@ components:
       type: http
       scheme: bearer
 definitions:
-  CutTypeSchema:
-    type: string
-    enum:
-    - complete
-    - normal
-    - blur
-    - none
-  CreditsExceededResponse:
-    title: Credits Exceeded Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 402
-      message:
-        type: string
-        example: Credits exceeded. Please contact sales.
   UnauthorizedResponse:
     title: Unauthorized Response
     type: object
@@ -193,27 +176,6 @@ definitions:
     example:
       code: 401
       message: submitted 'Bearer' token is unauthorized
-  RetouchingAccuracySchema:
-    type: string
-    default: normal
-    enum:
-    - normal
-    - precise
-  InputErrorResponse:
-    title: Input Error Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 400
-      message:
-        type: string
-  ProcessingSpeedSchema:
-    type: string
-    default: normal
-    enum:
-    - normal
-    - lazy
   InternalServerErrorResponse:
     title: Internal Server Error Response
     type: object
@@ -223,6 +185,22 @@ definitions:
         example: 500
       message:
         type: string
+  CreditsExceededResponse:
+    title: Credits Exceeded Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 402
+      message:
+        type: string
+        example: Credits exceeded. Please contact sales.
+  RetouchingAccuracySchema:
+    type: string
+    default: normal
+    enum:
+    - normal
+    - precise
   ForbiddenResponse:
     title: Forbidden Response
     type: object
@@ -230,6 +208,28 @@ definitions:
       code:
         type: integer
         example: 403
+      message:
+        type: string
+  ProcessingSpeedSchema:
+    type: string
+    default: normal
+    enum:
+    - normal
+    - lazy
+  CutTypeSchema:
+    type: string
+    enum:
+    - complete
+    - normal
+    - blur
+    - none
+  InputErrorResponse:
+    title: Input Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 400
       message:
         type: string
 externalDocs:
