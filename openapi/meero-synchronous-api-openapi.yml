@@ -165,6 +165,12 @@ components:
       type: http
       scheme: bearer
 definitions:
+  RetouchingAccuracySchema:
+    type: string
+    default: normal
+    enum:
+    - normal
+    - precise
   InternalServerErrorResponse:
     title: Internal Server Error Response
     type: object
@@ -172,27 +178,6 @@ definitions:
       code:
         type: integer
         example: 500
-      message:
-        type: string
-  ProcessingSpeedSchema:
-    type: string
-    default: normal
-    enum:
-    - normal
-    - lazy
-  RetouchingAccuracySchema:
-    type: string
-    default: normal
-    enum:
-    - normal
-    - precise
-  InputErrorResponse:
-    title: Input Error Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 400
       message:
         type: string
   ForbiddenResponse:
@@ -204,6 +189,22 @@ definitions:
         example: 403
       message:
         type: string
+  CreditsExceededResponse:
+    title: Credits Exceeded Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 402
+      message:
+        type: string
+        example: Credits exceeded. Please contact sales.
+  ProcessingSpeedSchema:
+    type: string
+    default: normal
+    enum:
+    - normal
+    - lazy
   UnauthorizedResponse:
     title: Unauthorized Response
     type: object
@@ -215,16 +216,15 @@ definitions:
     example:
       code: 401
       message: submitted 'Bearer' token is unauthorized
-  CreditsExceededResponse:
-    title: Credits Exceeded Response
+  InputErrorResponse:
+    title: Input Error Response
     type: object
     properties:
       code:
         type: integer
-        example: 402
+        example: 400
       message:
         type: string
-        example: Credits exceeded. Please contact sales.
   CutTypeSchema:
     type: string
     enum:
