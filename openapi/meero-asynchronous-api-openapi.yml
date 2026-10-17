@@ -191,6 +191,41 @@ components:
       type: http
       scheme: bearer
 definitions:
+  CutTypeSchema:
+    type: string
+    enum:
+    - complete
+    - normal
+    - blur
+    - none
+  MultiLevelAngle:
+    type: array
+    items:
+      type: string
+    description: The angle of the picture in a multi-level notation. Currently there are up to two levels. The first level determines the type of view, the second determines the detailed angle. Some angles have only one level.
+    example:
+    - exterior
+    - side-left
+  ImageExpiredResponse:
+    title: Image Expired Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 410
+      message:
+        type: string
+        example: file does not exist anymore.
+  CreditsExceededResponse:
+    title: Credits Exceeded Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 402
+      message:
+        type: string
+        example: Credits exceeded. Please contact sales.
   UnauthorizedResponse:
     title: Unauthorized Response
     type: object
@@ -202,6 +237,15 @@ definitions:
     example:
       code: 401
       message: submitted 'Bearer' token is unauthorized
+  InputErrorResponse:
+    title: Input Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 400
+      message:
+        type: string
   ImageNotFoundResponse:
     type: object
     title: Image Not Found Response
@@ -221,6 +265,17 @@ definitions:
         example: 500
       message:
         type: string
+  ImageStatusResponse:
+    title: Image Status Response
+    type: object
+    properties:
+      data:
+        type: object
+        properties:
+          images:
+            type: array
+            items:
+              $ref: '#/definitions/ImageStatus'
   ImageStatus:
     title: Image Status
     type: object
@@ -260,61 +315,6 @@ definitions:
         - ok
         - retake
         - null
-  ImageStatusResponse:
-    title: Image Status Response
-    type: object
-    properties:
-      data:
-        type: object
-        properties:
-          images:
-            type: array
-            items:
-              $ref: '#/definitions/ImageStatus'
-  CreditsExceededResponse:
-    title: Credits Exceeded Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 402
-      message:
-        type: string
-        example: Credits exceeded. Please contact sales.
-  ImageExpiredResponse:
-    title: Image Expired Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 410
-      message:
-        type: string
-        example: file does not exist anymore.
-  MultiLevelAngle:
-    type: array
-    items:
-      type: string
-    description: The angle of the picture in a multi-level notation. Currently there are up to two levels. The first level determines the type of view, the second determines the detailed angle. Some angles have only one level.
-    example:
-    - exterior
-    - side-left
-  CutTypeSchema:
-    type: string
-    enum:
-    - complete
-    - normal
-    - blur
-    - none
-  InputErrorResponse:
-    title: Input Error Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 400
-      message:
-        type: string
 externalDocs:
   description: Find out more about Car-Cutter
   url: https://www.car-cutter.com

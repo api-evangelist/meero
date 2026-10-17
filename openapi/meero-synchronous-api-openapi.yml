@@ -165,57 +165,6 @@ components:
       type: http
       scheme: bearer
 definitions:
-  UnauthorizedResponse:
-    title: Unauthorized Response
-    type: object
-    properties:
-      code:
-        type: integer
-      message:
-        type: string
-    example:
-      code: 401
-      message: submitted 'Bearer' token is unauthorized
-  InternalServerErrorResponse:
-    title: Internal Server Error Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 500
-      message:
-        type: string
-  CreditsExceededResponse:
-    title: Credits Exceeded Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 402
-      message:
-        type: string
-        example: Credits exceeded. Please contact sales.
-  RetouchingAccuracySchema:
-    type: string
-    default: normal
-    enum:
-    - normal
-    - precise
-  ForbiddenResponse:
-    title: Forbidden Response
-    type: object
-    properties:
-      code:
-        type: integer
-        example: 403
-      message:
-        type: string
-  ProcessingSpeedSchema:
-    type: string
-    default: normal
-    enum:
-    - normal
-    - lazy
   CutTypeSchema:
     type: string
     enum:
@@ -232,6 +181,57 @@ definitions:
         example: 400
       message:
         type: string
+  CreditsExceededResponse:
+    title: Credits Exceeded Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 402
+      message:
+        type: string
+        example: Credits exceeded. Please contact sales.
+  UnauthorizedResponse:
+    title: Unauthorized Response
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    example:
+      code: 401
+      message: submitted 'Bearer' token is unauthorized
+  ProcessingSpeedSchema:
+    type: string
+    default: normal
+    enum:
+    - normal
+    - lazy
+  ForbiddenResponse:
+    title: Forbidden Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 403
+      message:
+        type: string
+  InternalServerErrorResponse:
+    title: Internal Server Error Response
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 500
+      message:
+        type: string
+  RetouchingAccuracySchema:
+    type: string
+    default: normal
+    enum:
+    - normal
+    - precise
 externalDocs:
   description: Find out more about Car-Cutter
   url: https://www.car-cutter.com
