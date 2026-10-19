@@ -1,16 +1,89 @@
 generated: '2026-10-12'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/meero/integrations
 - https://n8n.io/integrations/meero/
 - https://composio.dev/toolkits/meero
 - https://monid.ai/tools/meero
 checked:
+- https://api.nuget.org/v3
 - https://composio.dev/toolkits/meero
+- https://crates.io/api/v1
 - https://monid.ai/tools/meero
 - https://n8n.io/integrations/meero/
+- https://proxy.golang.org
+- https://pypi.org/pypi
+- https://registry.npmjs.org
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
 - https://zapier.com/apps/meero/integrations
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: npm registry
+  partner: npm
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (JavaScript/TypeScript)
+  evidence: https://www.npmjs.com/package/@car-cutter/next-webplayer
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@car-cutter/next-webplayer'
+      version: 3.2.16
+      released: '2026-10-07'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@car-cutter/next-webplayer
+      repo_leg: github-org:carcutter
+      publisher_leg: org:car-cutter
+      matched_by: github-org
+    - name: '@car-cutter/react-webplayer'
+      version: 3.2.16
+      released: '2026-10-07'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@car-cutter/react-webplayer
+      repo_leg: github-org:carcutter
+      publisher_leg: org:car-cutter
+      matched_by: github-org
+    - name: '@car-cutter/vanilla-webplayer'
+      version: 3.2.16
+      released: '2026-10-07'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@car-cutter/vanilla-webplayer
+      repo_leg: github-org:carcutter
+      publisher_leg: org:car-cutter
+      matched_by: github-org
+    - name: '@car-cutter/vue-webplayer'
+      version: 3.2.16
+      released: '2026-10-07'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@car-cutter/vue-webplayer
+      repo_leg: github-org:carcutter
+      publisher_leg: org:car-cutter
+      matched_by: github-org
+    - name: '@car-cutter/wc-webplayer'
+      version: 3.2.16
+      released: '2026-10-07'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@car-cutter/wc-webplayer
+      repo_leg: github-org:carcutter
+      publisher_leg: org:car-cutter
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
 templates: []
