@@ -5,7 +5,7 @@
       "source": "https://www.carcutter.com/feed/",
       "feed_url": "https://www.carcutter.com/feed/",
       "title": "",
-      "saved": 4,
+      "saved": 0,
       "method": "feed"
     },
     {
@@ -16,6 +16,13 @@
       "method": "discovered"
     },
     {
+      "source": "https://www.carcutter.com/resources/feed/",
+      "feed_url": "https://www.carcutter.com/resources/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
       "source": "https://www.carcutter.com/contact/",
       "feed_url": "https://www.carcutter.com/contact/",
       "title": "",
@@ -23,6 +30,6 @@
       "method": "none"
     }
   ],
-  "post_count": 4,
-  "fetched": "2026-10-10T13:15:00Z"
+  "post_count": 21,
+  "fetched": "2026-10-17T14:53:57Z"
 }
