@@ -64,20 +64,129 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Meero is the Paris-founded AI visual-content company that rebranded to **Diffusely** in December 2024 after pivoting away from on-demand photography marketplaces toward vertical AI imaging software. Its surviving operating brand is **CarCutter** (DIFFUSELY Austria GmbH), a B2B vehicle merchandising platform for dealership groups, OEMs and used-vehicle marketplaces.
+Meero is the Paris-founded AI visual-content company that rebranded to Diffusely in December 2024 after pivoting away from on-demand photography marketplaces toward vertical AI imaging software. Its surviving operating brand is CarCutter (DIFFUSELY Austria GmbH, whose API host still returns the copyright line "(c) 2026 Meero Austria GmbH"), a B2B vehicle merchandising platform used by dealership groups, OEMs and used-vehicle marketplaces for guided capture, AI backgrounding, 360 spins, feature hotspots and automated publishing. The public developer surface is the Car-Cutter API (OpenAPI 3.1, bearer token, api.car-cutter.com), a keyless public demo endpoint, an OAuth-gated remote MCP server, a WebPlayer web-component family on npm, and a Statuspage. Two former Diffusely verticals have since left the group: autoRetouch merged into Grand Shooting (February 2026) and ProperShot joined Nodalview, so neither of their APIs is attributed here.
 
-The public developer surface profiled here belongs to CarCutter:
+**Areas:** Automotive · Image · Artificial Intelligence · Computer Vision · Photography · Media Processing · E-Commerce · Vehicle Merchandising · Company
 
-- **Car-Cutter API** — OpenAPI 3.1, 14 operations, bearer token, `https://api.car-cutter.com` — [docs](https://cloud.car-cutter.com/doc/api.html)
-- **Public keyless demo** — `POST /vehicle/composition/segment` plus a hosted UI at https://demo.car-cutter.com/
-- **Remote MCP server** — `https://www.carcutter.com/wp-json/mcp/mcp-oauth-server` (OAuth-gated, RFC 8414 + RFC 9728 discovery)
-- **CarCutter WebPlayer** — five first-party npm packages (`@car-cutter/*`, Apache-2.0) and a CDN build
-- **Status page** — https://carcutter.statuspage.io/
-- **llms.txt** — https://www.carcutter.com/llms.txt
+## Meero on APIs.io
 
-Ownership evidence: `https://api.car-cutter.com/` returns `{"copyright":"(c) 2026 Meero Austria GmbH","description":"A service by CarCutter"}`, and Diffusely's own domain `diffuse.ly` redirects to `www.carcutter.com`.
+Everything profiled for Meero is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/meero/](https://apis.io/providers/meero/)** — or go straight to one of the APIs or properties below.
 
-Two former Diffusely verticals have left the group and are **not** attributed here: **autoRetouch** merged into Grand Shooting (February 2026) and **ProperShot** joined Nodalview. The legacy `meero.com` domain no longer serves the company — it answers with an Apache2 Ubuntu default page under a certificate for `CN=forlog.fr`, and `api.meero.com` no longer resolves.
+### APIs (4)
 
-- https://www.carcutter.com/
-- https://forgeglobal.com/meero_stock/ (secondary-market listing that seeded this profile)
+- [Meero Asynchronous API](https://apis.io/apis/meero/meero-asynchronous-api/) — Asynchronous API
+- [Meero Feature API](https://apis.io/apis/meero/meero-feature-api/) — Feature API
+- [Meero Synchronous API](https://apis.io/apis/meero/meero-synchronous-api/) — Synchronous API
+- [Meero Vehicle API](https://apis.io/apis/meero/meero-vehicle-api/) — Vehicle API
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [CarCutter MCP Server](https://apis.io/servers/meero/carcutter-mcp-server/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Meero Carcutter Overlay](https://apis.io/overlays/meero/meero-carcutter-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Meero Authentication](https://apis.io/security/meero/meero-authentication/)
+- [Meero Domain Security](https://apis.io/security/meero/meero-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Meero Scopes](https://apis.io/scopes/meero/meero-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Meero Plans Pricing](https://apis.io/plans/meero/meero-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Meero Rate Limits](https://apis.io/rate-limits/meero/meero-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.carcutter.com/)
+- [Documentation](https://cloud.car-cutter.com/doc/api.html)
+- [Getting started](https://github.com/carcutter/carcutter-api-samples)
+- [API reference](https://cloud.car-cutter.com/doc/api.html)
+- [Sign up](https://www.carcutter.com/book-a-demo/)
+- [Support](https://www.carcutter.com/contact/)
+- [Blog](https://www.carcutter.com/resources/)
+- [Terms of service](https://www.carcutter.com/terms-and-conditions/)
+- [Privacy policy](https://www.carcutter.com/privacy-policy/)
+- [GitHub](https://github.com/carcutter)
+- [Status](https://carcutter.statuspage.io/)
+
+## API Evangelist rating
+
+**Kin Score 42.5** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 51.5 |
+| Contract governance | 4.5 |
+| Operational transparency | 34.2 |
+| Developer ergonomics | 58.9 |
+| Access clarity | 6.6 |
+
+**Agent readiness 42.4** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/meero/](https://apis.io/providers/meero/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Meero: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/meero/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
